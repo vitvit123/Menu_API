@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshDaily Restaurant</title>
+
+    <link rel="icon" href="images/food-logo.png">
+
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/Login.css">
+    <link rel="stylesheet" href="css/addToCart.css">
+
+
+</head>
+
+<body>
+
+    <header>
+
+        <a href="#" class="logo"><img src="images/food-logo.png" alt=""></a>
+
+        <nav class="navbar">
+            <a class="active" href="#home">home</a>
+            <a href="Menu.html">menu</a>
+            <a href="Dishes.html">Promotion</a>
+            <a href="About.html">about</a>
+            <a href="Contact.html">Contact Us</a>
+            <a href="News.html">News</a>
+        </nav>
+
+        <div class="icons">
+            <i class="fas fa-bars" id="menu-bars"></i>
+            <i class="fas fa-search" id="search-icon"></i>
+            <a href="Login.html" class="fas fa-user"></a>
+            <i class="fas fa-shopping-cart" id="cart-icon"></i>
+        </div>
+
+        <!-- add to cart -->
+        <div class="cart">
+            <i class="fa-regular fa-circle-xmark" id="close-icon"></i>
+            <h3>Your cart</h3>
+            <div class="cart-box">
+                <div class="image">
+                    <img src="images/menu-12.jpg" alt="">
+                </div>
+                <div class="cart-text">
+                    <span>Beef Steak</span>
+                    <p>Price $12.99</p>
+                    <input type="number" value="1" class="cart-qty">
+                </div>
+                <div class="cart-remove">
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+                <div class="total">
+                    <span>Total:</span>
+                    <span>$12.99</span>
+                </div>
+                <button type="button" class="buy-btn">Buy now</button>
+            </div>
+
+        </div>
+
+
+    </header>
+
+    <!-- search form  -->
+
+    <form action="" id="search-form">
+        <input type="search" placeholder="search here..." name="" id="search-box">
+        <label for="search-box" class="fas fa-search"></label>
+        <i class="fas fa-times" id="close"></i>
+    </form>
+
+
+    <!-- home section starts  -->
+
+    <section class="home" id="home">
+
+        <div class="swiper-container home-slider">
+
+            <div class="swiper-wrapper wrapper">
+
+                <div class="swiper-slide slide">
+                    <div class="content">
+                        <span>Best Food in Country</span>
+                        <h3>
+                            Greate Tasted
+                        </h3>
+                        <p>Food is your body's fuel. Without fuel, your body wants to shut down.</p>
+                        <a href="Menu.html" class="btn">order now</a>
+                    </div>
+                    <div class="image">
+                        <img src="images/home-img-3.png" alt="">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="swiper-pagination"></div>
+
+            <!-- feature part -->
+            <div class=" feature">
+                <h3 class="sub-heading">Feature</h3>
+                <h1 class="heading">New feature</h>
+
+                    <div class="item">
+                        <div class="main-item1 ">
+                            <i class="fa-solid fa-pizza-slice"></i>
+                            <h4>Order</h4>
+                        </div>
+                        <div class="main-item2">
+                            <i class="fa-solid fa-truck"></i>
+                            <h4>Delivery</h4>
+                        </div>
+                        <div class="main-item3">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            <h4>Payment</h4>
+                        </div>
+                        <div class="main-item4">
+                            <i class="fas fa-headset"></i>
+                            <h4>24/7 service</h4>
+                        </div>
+                    </div>
+            </div>
+
+            <!-- Story part -->
+            <div class="story">
+                <h1 class="heading">Our story</h><br><br>
+
+                    <div class="row">
+                        <div class="content">
+                            <h3 class="sub-heading">from 2017</h3>
+                            <p>
+                                Ichiruka was born out of a vision to provide a simple, yet warm and comfortable
+                                dining experience.
+                                It all started with an idea of two childhood friends, baseball teammates and
+                                food lovers, to bring
+                            </p>
+                            <p>
+                                together each of their own strenghts, to create something they can share with
+                                others. With Chef
+                                Krsna – a natural artist, with an immense passion in culinary art, and Kai – a
+                                CPA accountant with
+                                business acumen, Ichiruka Restaurant was born.
+                            </p>
+                            <p>
+                                Ichiruka’ is your place to enjoy good food with the comfort and familiarity of
+                                home! Ichiruka’ was
+                                born out of a vision to provide you a simple yet warm and comfortable dining
+                                experience!
+                            </p>
+                        </div>
+                        <div class="image">
+                            <img src="images/stroy1.png" alt="">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="image">
+                            <img src="images/story2.jpg" alt="">
+                        </div>
+                        <div class="content">
+                            <h3 class="sub-heading">In the future</h3>
+                            <p>
+                                Ichiruka was born out of a vision to provide a simple, yet warm and comfortable
+                                dining experience.
+                                It all started with an idea of two childhood friends, baseball teammates and
+                                food lovers, to bring
+                            </p>
+                            <p>
+                                together each of their own strenghts, to create something they can share with
+                                others. With Chef
+                                Krsna – a natural artist, with an immense passion in culinary art, and Kai – a
+                                CPA accountant with
+                                business acumen, Ichiruka Restaurant was born.
+                            </p>
+                            <p>
+                                Ichiruka’ is your place to enjoy good food with the comfort and familiarity of
+                                home! Ichiruka’ was
+                                born out of a vision to provide you a simple yet warm and comfortable dining
+                                experience!
+                            </p>
+                        </div>
+
+                    </div>
+
+            </div>
+
+                    
+    </section>
+
+
+    <!-- home section ends -->
+
+
+
+    <div class="footer">
+
+        <div class="box-container">
+
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="#">home</a>
+                <a href="#">menu</a>
+                <a href="#">promotion</a>
+                <a href="#">about</a>
+                <a href="#">Contact</a>
+            </div>
+
+            <div class="box">
+                <h3>Location</h3>
+                <i class="fa-solid fa-location-dot"></i>
+                <a href="#">3rd Floor, City C4, Olympia
+                    <br> City Phnom Penh, Cambodia, 12312
+                </a>
+            </div>
+
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#">+855 979 801 569 </a>
+                <a href="#">johnkimleang29@mail.com</a>
+            </div>
+
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="https://github.com/Kimleang7">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-linkedin"></i>
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="#">Please support us by other platform</a>
+            </div>
+        </div>
+        <!-- <div class="credit">
+            <p>Develop by: JK Leang</p>
+        </div> -->
+    </div>
+
+
+    <!-- footer section ends -->
+
+    <!-- loader part  -->
+    <!-- <div class="loader-container">
+        <img src="images/loader2.gif" alt="">
+    </div> -->
+
+
+    <!-- custom js file link  -->
+    <script src="js/script.js"></script>
+    <script src="js/Login.js"></script>
+    <script src="js/addToCard.js"></script>
+    <script src="jquery-3.6.3.js"></script>
+
+</body>
+
+</html>

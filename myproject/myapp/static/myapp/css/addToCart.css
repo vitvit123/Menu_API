@@ -1,0 +1,86 @@
+.cart{
+    position: fixed;
+    width: 35rem;
+    top: 0;
+    right: -36rem;
+    min-height: 100vh;
+    background: #eee;
+    padding: 1rem 1rem;
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .1);
+}
+.cart.active{
+    right: 0;
+}
+.cart .fa-circle-xmark{
+    float: right;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.cart .fa-circle-xmark:hover{
+    color: red;
+}
+.cart h3{
+    text-align: center;
+    font-size: 2rem;
+}
+.cart-box{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 1rem;
+    height: 10rem;
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .1);
+    border-radius: 10px;
+}
+.cart-box .image{
+    flex: 1 1 10rem;
+    border-radius: 30px;
+
+}
+.cart-box .image img{
+    width: 100%;
+}
+.cart-box .cart-text{
+    flex: 1 1 10rem;
+    line-height: 25px;
+}
+.cart-box .cart-text .cart-qty{
+    width: 3rem;
+    background:#fff4f4;
+    border: 1px solid black;
+    border-radius: 2px;
+    text-align: center;
+}
+.cart-box .cart-text .cart-qty:hover{
+    border: 1px solid red;
+}
+.cart-box .cart-text span{
+    color: #000;
+    font-size: 16px;
+}
+.cart-box .cart-remove{
+    flex: 1 1 2rem;
+    font-size: 16px;
+    cursor: pointer;
+    color: red;
+    line-height: 7rem;
+}
+.cart-box .total{
+    border-top:1px solid #000;
+    width: 100%;
+}
+.cart-box .total span{
+    font-size: 18px;
+}
+.cart-box .buy-btn{
+    background-color: #192a56;
+    color: #eee;
+    width: 8rem;
+    height: 3rem;
+    margin: auto;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.cart-box .buy-btn:hover{
+    background-color: #0d6efd;
+}

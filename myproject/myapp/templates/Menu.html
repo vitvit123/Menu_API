@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,13 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreshDaily Restaurant</title>
-    <link rel="icon" href="{% static 'myapp/img/food-logo.png' %}">
+    <link rel="icon" href="{% static 'images/food-logo.png' %}">
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'myapp/css/addToCart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
 
 </head>
 
@@ -21,7 +22,8 @@
 
 <header>
 
-    <a href="#" class="logo"><img src="{% static 'myapp/img/food-logo.png' %}" alt=""></a>
+
+    <a href="#" class="logo"><img src="{% static 'images/food-logo.png' %}" alt=""></a>
 
     <nav class="navbar">
         <a href="{% url 'myapp:home' %}">home</a>
@@ -32,7 +34,6 @@
 
     <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
         <a href="{% url 'myapp:login' %}" class="fas fa-user"></a>
         <i class="fas fa-shopping-cart" id="cart-icon"></i>
     </div>
@@ -43,7 +44,7 @@
         <h3>Your cart</h3>
         <div class="cart-box">
             <div class="image">
-                <img src="{% static 'myapp/img/menu-14.jpg' %}" alt="">
+                <img src="{% static 'images/menu-14.jpg' %}" alt="">
             </div>
             <div class="cart-text">
                 <span>Beef Steak</span>
@@ -59,16 +60,10 @@
             </div>
             <button type="button" class="buy-btn">Buy now</button>
         </div>
+
     </div>
 
 </header>
-
-<!-- search form  -->
-<form action="" id="search-form">
-    <input type="search" placeholder="search here..." name="" id="search-box">
-    <label for="search-box" class="fas fa-search"></label>
-    <i class="fas fa-times" id="close"></i>
-</form>
 
 <section class="menu" id="menu">
 
@@ -76,206 +71,27 @@
     <h1 class="heading"> today's speciality </h1>
 
     <div class="box-container">
+        <!-- Loop through each MenuItem object -->
+        {% for item in menu_items %}
         <div class="box">
             <div class="image">
-                <img src="{% static 'myapp/img/menu-12.jpg' %}" alt="">
+                <img src="{{ item.image.url }}" alt="">
             </div>
             <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Beef Steak</h3>
-                <p>Wagyu beef is popular around the world because of its superior eating quality.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
+                <h3>{{ item.item_name }}</h3>
+                <p>{{ item.description }}</p>
+                <span class="price">${{ item.price }}</span>
+                <a href="" productid="{{item.id}}" class="btn addtocard">add to cart</a>
             </div>
         </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-13.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Vegetable Soup</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-14.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Steam egg</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-16.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Sushi trash</h3>
-                <p>The rice is traditionally moistened with rice vinegar is called trash</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-1.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Pizza</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-2.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Burger</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-3.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Mixed salad</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-4.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Mixed fried rice</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-5.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Vegetables</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="image">
-                <img src="{% static 'myapp/img/menu-6.jpg' %}" alt="">
-            </div>
-            <div class="content">
-                <div class="stars">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
-                </div>
-                <h3>Soup</h3>
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, accusantium.</p>
-                <span class="price">$12.99</span>
-                <a href="{% url 'myapp:menu' %}" class="btn">add to cart</a>
-            </div>
-        </div>
-
+        {% endfor %}
     </div>
-
-    
-    
 
 </section>
 
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="{% static 'myapp/js/addToCart.js' %}"></script>
-<script src="{% static 'myapp/js/script.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/addToCard.js' %}"></script>
+<script src="{% static 'js/jquery.3.6.3.js' %}"></script>
 
 </body>
 

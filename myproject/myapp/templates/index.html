@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreshDaily Restaurant</title>
 
-    <link rel="icon" href="{% static 'myapp/images/food-logo.png' %}">
+    <link rel="icon" href="{% static 'images/food-logo.png' %}">
 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -18,9 +18,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
     <!-- Custom CSS files -->
-    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'myapp/css/Login.css' %}">
-    <link rel="stylesheet" href="{% static 'myapp/css/addToCart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
 
 </head>
 
@@ -28,7 +28,7 @@
 
 <header>
 
-    <img src="{% static 'myapp/img/logo.png' %}" alt="Food Logo">
+    <img src="{% static 'images/logo.png' %}" alt="Food Logo">
     <nav class="navbar">
         <a class="active" href="#home">home</a>
         <a href="{% url 'myapp:menu' %}">menu</a>
@@ -38,11 +38,9 @@
 
     <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
         <a href="{% url 'myapp:login' %}" class="fas fa-user"></a>
         <i class="fas fa-shopping-cart" id="cart-icon"></i>
     </div>
-
     <!-- add to cart -->
     <div class="cart">
         <i class="fa-regular fa-circle-xmark" id="close-icon"></i>
@@ -69,13 +67,6 @@
 
 </header>
 
-<!-- search form  -->
-
-<form action="" id="search-form">
-    <input type="search" placeholder="search here..." name="" id="search-box">
-    <label for="search-box" class="fas fa-search"></label>
-    <i class="fas fa-times" id="close"></i>
-</form>
 
 
 <!-- home section starts  -->
@@ -97,7 +88,7 @@
                 </div>
                 <div class="image">
 
-                    <img src="{% static 'myapp/img/home-img-3.png' %}" alt="">
+                    <img src="{% static 'images/home-img-3.png' %}" alt="">
                 </div>
             </div>
 
@@ -156,12 +147,12 @@
                     </p>
                 </div>
                 <div class="image">
-                    <img src="{% static 'myapp/img/stroy1.png' %}" alt="">
+                    <img src="{% static 'images/stroy1.png' %}" alt="">
                 </div>
             </div>
             <div class="row">
                 <div class="image">
-                    <img src="{% static 'myapp/img/story2.jpg' %}" alt="">
+                    <img src="{% static 'images/story2.jpg' %}" alt="">
                 </div>
                 <div class="content">
                     <h3 class="sub-heading">In the future</h3>
@@ -239,9 +230,8 @@
                     <img src="{% static 'myapp/images/loader2.gif' %}" alt="">
                 </div> -->
                 <!-- custom js file link  -->
-                <script src="{% static 'myapp/js/script.js' %}"></script>
-                <script src="{% static 'myapp/js/Login.js' %}"></script>
-                <script src="{% static 'myapp/js/addToCart.js' %}"></script>
-                <script src="{% static 'myapp/jquery-3.6.3.js' %}"></script>
+                <script src="{% static 'js/script.js' %}"></script>
+                <script src="{% static 'js/addToCard.js' %}"></script>
+                <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
                 </body>
                 </html>

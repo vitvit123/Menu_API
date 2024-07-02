@@ -6,15 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FreshDaily Restaurant</title>
-    <link rel="icon" href="{% static 'myapp/images/food-logo.png' %}">
+    <link rel="icon" href="{% static 'images/food-logo.png' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
 </head>
 <body>
 
     <header>
-        <a href="{% url 'myapp:home' %}" class="logo"><img src="{% static 'myapp/img/food-logo.png' %}" alt=""></a>
+        <a href="{% url 'myapp:home' %}" class="logo"><img src="{% static 'images/food-logo.png' %}" alt=""></a>
         <nav class="navbar">
             <a href="{% url 'myapp:home' %}">home</a>
             <a href="{% url 'myapp:menu' %}">menu</a>
@@ -40,7 +40,7 @@
         <h1 class="heading"> why choose us? </h1>
         <div class="row">
             <div class="image">
-                <img src="{% static 'myapp/img/menu-10-removebg.png' %}" alt="">
+                <img src="{% static 'images/menu-10-removebg.png' %}" alt="">
             </div>
             <div class="content">
                 <h3>Our mission</h3>
@@ -58,7 +58,7 @@
                 <a href="#" class="btn">learn more</a>
             </div>
             <div class="image">
-                <img src="{% static 'myapp/img/About_pizza.png' %}" alt="">
+                <img src="{% static 'images/About_pizza.png' %}" alt="">
             </div>
         </div>
     </section>
@@ -99,7 +99,7 @@
         </div> -->
     </div>
 
-    <script src="{% static 'myapp/js/script.js' %}"></script>
-
-</body>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/addToCard.js' %}"></script>
+    <script src="{% static 'js/jquery.3.6.3.js' %}"></script></body>
 </html>

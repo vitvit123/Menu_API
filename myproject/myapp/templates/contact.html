@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
 
 </head>
 <body>
 
 <header>
-    <a href="{% url 'myapp:home' %}" class="logo"><img src="{% static 'myapp/img/food-logo.png' %}" alt=""></a>
+    <a href="{% url 'myapp:home' %}" class="logo"><img src="{% static 'images/food-logo.png' %}" alt=""></a>
     <nav class="navbar">
         <a href="{% url 'myapp:home' %}">home</a>
         <a href="{% url 'myapp:menu' %}">menu</a>
@@ -28,18 +28,12 @@
     </nav>
     <div class="icons">
         <i class="fas fa-bars" id="menu-bars"></i>
-        <i class="fas fa-search" id="search-icon"></i>
         <a href="{% url 'myapp:login' %}" class="fas fa-user"></a>  
         <i class="fas fa-shopping-cart"></i>  
     </div>
 </header>
 
-<!-- search form  -->
-<form action="" id="search-form" method="get">
-    <input type="search" placeholder="search here..." name="q" id="search-box">
-    <label for="search-box" class="fas fa-search"></label>
-    <i class="fas fa-times" id="close"></i>
-</form>
+
 
 <section class="order" id="order">
     <h3 class="sub-heading"> Contact us </h3>
@@ -115,8 +109,9 @@
     </div> -->
 </div>
 
-<script src="{% static 'myapp/js/script.js' %}"></script>
-<script src="{% static 'myapp/js/addToCard.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/addToCard.js' %}"></script>
+<script src="{% static 'js/jquery.3.6.3.js' %}"></script>
 
 </body>
 </html>

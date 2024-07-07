@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import MenuItem  
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
 
 
 def home_page(request):
@@ -27,3 +29,19 @@ def Admin(request):
     return render(request, 'admin.html')
 def About(request):
     return render(request, 'about.html')
+def register(request):
+    return render(request, 'register.html')
+
+def get_item_details(request):
+    item_id = request.GET.get('item_id')
+    try:
+        item = get_object_or_404(MenuItem, id=item_id)
+        item_details = {
+            'item_name': item.item_name,
+            'description': item.description,
+            'price': str(item.price),
+            'image': item.image.url if item.image else ''
+        }
+        return JsonResponse(item_details)
+    except MenuItem.DoesNotExist:
+        return JsonResponse({'error': 'Item not found'}, status=404)

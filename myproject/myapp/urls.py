@@ -16,6 +16,7 @@ urlpatterns = [
     re_path(r'^admin/$', views.Admin, name='admin'),
     re_path(r'^about/$', views.About, name='about'),
     re_path(r'^register/$', views.register, name='register'),
+    re_path(r'^makeorder/$', views.makeorder, name='makeorder'),
     re_path(r'get_item_details/$', views.get_item_details, name='get_item_details'),]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

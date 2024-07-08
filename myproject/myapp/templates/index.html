@@ -26,46 +26,7 @@
 
 <body>
 
-<header>
-
-    <img src="{% static 'images/logo.png' %}" alt="Food Logo">
-    <nav class="navbar">
-        <a class="active" href="#home">home</a>
-        <a href="{% url 'myapp:menu' %}">menu</a>
-        <a href="{% url 'myapp:about' %}">about</a>
-        <a href="{% url 'myapp:contact' %}">Contact Us</a>
-    </nav>
-
-    <div class="icons">
-        <i class="fas fa-bars" id="menu-bars"></i>
-        <a href="{% url 'myapp:login' %}" class="fas fa-user"></a>
-        <i class="fas fa-shopping-cart" id="cart-icon"></i>
-    </div>
-    <!-- add to cart -->
-    <div class="cart">
-        <i class="fa-regular fa-circle-xmark" id="close-icon"></i>
-        <h3>Your cart</h3>
-        <div class="cart-box">
-            <div class="image">
-                <img src="{% static 'myapp/images/menu-12.jpg' %}" alt="">
-            </div>
-            <div class="cart-text">
-                <span>Beef Steak</span>
-                <p>Price $12.99</p>
-                <input type="number" value="1" class="cart-qty">
-            </div>
-            <div class="cart-remove">
-                <i class="fa-solid fa-trash"></i>
-            </div>
-            <div class="total">
-                <span>Total:</span>
-                <span>$12.99</span>
-            </div>
-            <button type="button" class="buy-btn">Buy now</button>
-        </div>
-    </div>
-
-</header>
+    {% include 'header.html' %}
 
 
 

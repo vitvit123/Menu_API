@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshDaily Restaurant</title>
+
+    <link rel="icon" href="{% static 'images/food-logo.png' %}">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- Custom CSS files -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/Login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/notification.css' %}">
+
+</head>
+<style>
+    .notification {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.notification-box {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.notification-box:hover {
+    transform: scale(1.05);
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.notification-header h4 {
+    margin: 0;
+    color: #007bff;
+    font-size: 1.5em;
+}
+
+.notification-header i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.notification-content p {
+    margin: 10px 0;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.notification-content p i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+.notification-content p strong {
+    color: #000;
+    margin-right: 5px;
+}
+
+.notification-content .complete-button {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.notification-content .complete-button:hover {
+    background-color: #218838;
+}
+
+</style>
+<body>
+
+    {% include 'header.html' %}
+    <section class="notification" id="notificationbox">
+        {% for order in orders %}
+            <div class="notification-box" id="order-{{ order.id }}">
+                <div class="notification-header">
+                    <h4><i class="fas fa-bell"></i> Order Notification</h4>
+                </div>
+                <div class="notification-content">
+                    <p><i class="fas fa-id-badge"></i> <strong>Order ID:</strong> {{ order.id }}</p>
+                    <p><i class="fas fa-user"></i> <strong>Customer:</strong> {{ order.customer.user.username }}</p>
+                    <p><i class="fas fa-utensils"></i> <strong>Menu Item:</strong> {{ order.menu_item.item_name }}</p>
+                    <p><i class="fas fa-sort-amount-up"></i> <strong>Quantity:</strong> {{ order.quantity }}</p>
+                    <p><i class="fas fa-dollar-sign"></i> <strong>Total Price:</strong> ${{ order.total_price }}</p>
+                    <p><i class="fas fa-calendar-alt"></i> <strong>Order Date:</strong> {{ order.order_date }}</p>
+                    <button class="complete-button" onclick="markOrderCompleted({{ order.id }})">Mark as Completed</button>
+                </div>
+            </div>
+        {% endfor %}
+    </section>
+
+    <div class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>quick links</h3>
+                <a href="{% url 'myapp:home' %}">home</a>
+                <a href="{% url 'myapp:menu' %}">menu</a>
+                <a href="{% url 'myapp:about' %}">about</a>
+                <a href="{% url 'myapp:contact' %}">Contact</a>
+            </div>
+
+            <div class="box">
+                <h3>Location</h3>
+                <i class="fa-solid fa-location-dot"></i>
+                <a href="#">3rd Floor, City C4, Olympia
+                    <br> City Phnom Penh, Cambodia, 12312
+                </a>
+            </div>
+
+            <div class="box">
+                <h3>contact info</h3>
+                <a href="#">+855 979 801 569 </a>
+                <a href="#">johnkimleang29@mail.com</a>
+            </div>
+
+            <div class="box">
+                <h3>follow us</h3>
+                <a href="https://github.com/Kimleang7">
+                    <i class="fa-brands fa-facebook"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-linkedin"></i>
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="#">Please support us by other platform</a>
+            </div>
+        </div>
+    </div>
+    <!-- footer section ends -->
+
+    <!-- custom js file link  -->
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/addToCard.js' %}"></script>
+    <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
+    <script>
+       
+    </script>
+</body>
+</html>

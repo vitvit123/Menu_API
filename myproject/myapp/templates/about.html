@@ -10,23 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
 </head>
 <body>
 
-    <header>
-        <a href="{% url 'myapp:home' %}" class="logo"><img src="{% static 'images/food-logo.png' %}" alt=""></a>
-        <nav class="navbar">
-            <a href="{% url 'myapp:home' %}">home</a>
-            <a href="{% url 'myapp:menu' %}">menu</a>
-            <a class="active" href="{% url 'myapp:about' %}">about</a>
-            <a href="{% url 'myapp:contact' %}">contact us</a>
-        </nav>
-        <div class="icons">
-            <i class="fas fa-bars" id="menu-bars"></i>
-            <a href="{% url 'myapp:login' %}" class="fas fa-user"></a>
-            <a class="fas fa-shopping-cart"></a>
-        </div>
-    </header>
+    {% include 'header.html' %}
 
     <!-- search form -->
     <form action="" id="search-form" method="get">

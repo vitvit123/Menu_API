@@ -3,7 +3,7 @@ from .models import MenuItem
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from .models import Order
-
+from .models import Order, Customer, MenuItem
 
 def home_page(request):
     return render(request, 'index.html')
@@ -32,6 +32,10 @@ def About(request):
     return render(request, 'about.html')
 def register(request):
     return render(request, 'register.html')
+def notification(request):
+    orders = Order.objects.all()
+    return render(request, 'notification.html', {'orders': orders})
+
 
 def get_item_details(request):
     item_id = request.GET.get('item_id')
@@ -50,7 +54,6 @@ def get_item_details(request):
     
 
 
-from .models import Order, Customer, MenuItem
 
 def makeorder(request):
     if request.method == 'GET':
@@ -85,3 +88,4 @@ def makeorder(request):
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Invalid request method.'}, status=400)
+

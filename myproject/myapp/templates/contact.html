@@ -18,20 +18,7 @@
 </head>
 <body>
 
-<header>
-    <a href="{% url 'myapp:home' %}" class="logo"><img src="{% static 'images/food-logo.png' %}" alt=""></a>
-    <nav class="navbar">
-        <a href="{% url 'myapp:home' %}">home</a>
-        <a href="{% url 'myapp:menu' %}">menu</a>
-        <a href="{% url 'myapp:about' %}">about</a>
-        <a class="active" href="{% url 'myapp:contact' %}">Contact Us</a>
-    </nav>
-    <div class="icons">
-        <i class="fas fa-bars" id="menu-bars"></i>
-        <a href="{% url 'myapp:login' %}" class="fas fa-user"></a>  
-        <i class="fas fa-shopping-cart"></i>  
-    </div>
-</header>
+    {% include 'header.html' %}
 
 
 

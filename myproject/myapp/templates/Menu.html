@@ -20,47 +20,7 @@
 
 <body>
 
-<header>
-    <a href="#" class="logo"><img src="{% static 'images/food-logo.png' %}" alt=""></a>
-
-    <nav class="navbar">
-        <a href="{% url 'myapp:home' %}">home</a>
-        <a class="active" href="{% url 'myapp:menu' %}">menu</a>
-        <a href="{% url 'myapp:about' %}">about</a>
-        <a href="{% url 'myapp:contact' %}">Contact Us</a>
-    </nav>
-
-    <div class="icons">
-        <i class="fas fa-bars" id="menu-bars"></i>
-        <a href="{% url 'myapp:login' %}" class="fas fa-user"></a>
-        <i class="fas fa-shopping-cart" id="cart-icon"></i>
-    </div>
-
-   <!-- add to cart -->
-<div class="cart">
-    <i class="fa-regular fa-circle-xmark" id="close-icon"></i>
-    <h3>Your cart</h3>
-    <div class="cart-box">
-        <div class="image">
-            <img src="" class="foodcard" alt="">
-        </div>
-        <div class="cart-text">
-            <span></span>
-            <p></p>
-            <input type="number" value="1" class="cart-qty">
-        </div>
-        <div class="cart-remove">
-            <i class="fa-solid fa-trash"></i>
-        </div>
-        <div class="total">
-            <span>Total: $</span>
-            <span class="totalprice">0</span>
-        </div>
-        <button type="button" onclick="BuyNow()" id="BuyNow" class="buy-btn">Buy now</button>
-    </div>
-</div>
-
-</header>
+{% include 'header.html' %}
 
 <section class="menu" id="menu">
     <h3 class="sub-heading"> our menu </h3>
@@ -164,8 +124,7 @@ function BuyNow() {
                 // Example: Redirect to home page
                 window.location.href = '{% url "myapp:home" %}';
             }
-        });        
-    },
+        });        },
         error: function(xhr, status, error) {
             console.error('Error placing order:', error);
             // Handle error response as needed

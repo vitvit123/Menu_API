@@ -1,0 +1,166 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Categories</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<style>
+    body {
+        background-color: #f7f9fc;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .header {
+        padding: 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header h4 {
+        margin: 0;
+    }
+
+    .header i {
+        font-size: 1.5rem;
+        color: #6c757d;
+    }
+
+    .search-bar {
+        position: relative;
+    }
+
+    .search-bar .form-control {
+        padding-left: 40px;
+    }
+
+    .search-bar .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        color: #6c757d;
+    }
+
+    .category-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .category-card {
+        flex: 0 0 48%;
+        display: flex;
+        flex-direction: column;
+        padding: 15px;
+        background-color: #cfcfcf; /* Default background color */
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-content {
+        flex: 1;
+    }
+
+    .category-content h5 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .category-content p {
+        margin: 5px 0 0;
+        font-size: 0.9rem;
+        color: #fff;
+    }
+
+    .category-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .category-buttons .btn {
+        font-size: 0.9rem;
+    }
+
+</style>
+<body>
+
+<div class="container mt-4">
+    <div class="header d-flex justify-content-between align-items-center mb-4">
+        <i class="fas fa-heart"></i>
+        <h4>Меню</h4>
+        <i class="fas fa-user"></i>
+    </div>
+    <div class="search-bar mb-4">
+        <input type="text" class="form-control" id="search-input" placeholder="Поиск по всему каталогу">
+        <i class="fas fa-search search-icon"></i>
+    </div>
+    <div id="category-list" class="category-list">
+        <!-- User cards will be inserted here dynamically -->
+    </div>
+</div>
+
+<script>
+    const superusers = [
+        {% for user in superusers %}
+            {
+                username: '{{ user.username }}',
+                email: '{{ user.email }}',
+                id: '{{ user.id }}'
+            },
+        {% endfor %}
+    ];
+
+    const categoryList = document.getElementById('category-list');
+    const searchInput = document.getElementById('search-input');
+
+    const createUserCard = (user) => {
+        const card = document.createElement('div');
+        card.className = 'category-card';
+
+        card.innerHTML = `
+            <div class="category-content">
+                <h5>${user.username}</h5>
+                <p>${user.email}</p>
+                <div class="category-buttons">
+                    <button store_id=${user.id} class="btn btn-outline-light"><i class="fas fa-heart"></i> Add to Favorite</button>
+                    <button store_id=${user.id} class="btn btn-outline-light"><i class="fas fa-eye"></i> See More</button>                </div>
+            </div>
+        `;
+
+        return card;
+    };
+
+    const displayUsers = (filteredUsers) => {
+        categoryList.innerHTML = '';
+        filteredUsers.forEach((user) => {
+            const card = createUserCard(user);
+            categoryList.appendChild(card);
+        });
+    };
+
+    searchInput.addEventListener('input', (e) => {
+        const searchText = e.target.value.toLowerCase();
+        const filteredUsers = superusers.filter((user) => {
+            return (
+                user.username.toLowerCase().includes(searchText) ||
+                user.email.toLowerCase().includes(searchText)
+            );
+        });
+        displayUsers(filteredUsers);
+    });
+
+    // Initial display of all superusers
+    displayUsers(superusers);
+</script>
+
+</body>
+</html>

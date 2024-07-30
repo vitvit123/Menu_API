@@ -98,6 +98,10 @@
 .notification-content .complete-button:hover {
     background-color: #218838;
 }
+.notification{
+    margin-top: 5%;
+    margin-bottom: 0%;
+}
 
 </style>
 <body>
@@ -116,8 +120,7 @@
                     <p><i class="fas fa-sort-amount-up"></i> <strong>Quantity:</strong> {{ order.quantity }}</p>
                     <p><i class="fas fa-dollar-sign"></i> <strong>Total Price:</strong> ${{ order.total_price }}</p>
                     <p><i class="fas fa-calendar-alt"></i> <strong>Order Date:</strong> {{ order.order_date }}</p>
-                    <button class="complete-button" onclick="markOrderCompleted({{ order.id }})">Mark as Completed</button>
-                </div>
+                <button type="button" class="complete-button" onclick="markOrderCompleted( '{{ order.id }}' )">Mark as Completed</button>                </div>
             </div>
         {% endfor %}
     </section>
@@ -127,11 +130,11 @@
             <div class="box">
                 <h3>quick links</h3>
                 <a href="{% url 'myapp:home' %}">home</a>
-                <a href="{% url 'myapp:menu' %}">menu</a>
+                <a class="active" id="menu-link" href="#">menu</a>
                 <a href="{% url 'myapp:about' %}">about</a>
                 <a href="{% url 'myapp:contact' %}">Contact</a>
             </div>
-
+    
             <div class="box">
                 <h3>Location</h3>
                 <i class="fa-solid fa-location-dot"></i>
@@ -139,13 +142,13 @@
                     <br> City Phnom Penh, Cambodia, 12312
                 </a>
             </div>
-
+    
             <div class="box">
                 <h3>contact info</h3>
                 <a href="#">+855 979 801 569 </a>
                 <a href="#">johnkimleang29@mail.com</a>
             </div>
-
+    
             <div class="box">
                 <h3>follow us</h3>
                 <a href="https://github.com/Kimleang7">
@@ -153,19 +156,77 @@
                     <i class="fa-brands fa-instagram"></i>
                     <i class="fa-brands fa-linkedin"></i>
                     <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="#">Please support us by other platform</a>
-            </div>
-        </div>
-    </div>
+                    </a>
+                    <a href="#">Please support us by other platform</a>
+                    </div>
+                    </div>
+                    <!-- <div class="credit">
+                         <p>Develop by: JK Leang</p>
+                     </div> -->
+                    
+                    </div>
     <!-- footer section ends -->
-
+</body>
+</html>
     <!-- custom js file link  -->
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/addToCard.js' %}"></script>
     <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
     <script>
-       
+        function markOrderCompleted(orderId) {
+    // Use SweetAlert for confirmation dialog
+    Swal.fire({
+        title: 'Mark Order as Completed?',
+        text: "Are you sure you want to mark this order as completed?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, mark it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Proceed with AJAX request
+            $.ajax({
+                url: '{% url "myapp:mark_order_completed" %}',
+                type: "POST",
+                data: {
+                    'order_id': orderId,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.success) {
+                        // Order successfully marked as completed
+                        $('#order-' + orderId).remove();
+                        Swal.fire(
+                            'Completed!',
+                            'The order has been marked as completed.',
+                            'success'
+                        );
+                    } else {
+                        Swal.fire(
+                            'Error!',
+                            'Failed to mark the order as completed.',
+                            'error'
+                        );
+                    }
+                },
+                error: function() {
+                    Swal.fire(
+                        'Error!',
+                        'Failed to mark the order as completed.',
+                        'error'
+                    );
+                }
+            });
+        } else {
+            // Handle cancellation
+            console.log("Marking order canceled.");
+        }
+    });
+}
+
+
     </script>
-</body>
-</html>
+

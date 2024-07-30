@@ -45,8 +45,7 @@
                         Greate Tasted
                     </h3>
                     <p>Food is your body's fuel. Without fuel, your body wants to shut down.</p>
-                    <a href="{% url 'myapp:menu' %}" class="btn">order now</a>
-                </div>
+                    <a class="active btn" id="menu-links" href="#">menu</a>                </div>
                 <div class="image">
 
                     <img src="{% static 'images/home-img-3.png' %}" alt="">
@@ -150,7 +149,7 @@
         <div class="box">
             <h3>quick links</h3>
             <a href="{% url 'myapp:home' %}">home</a>
-            <a href="{% url 'myapp:menu' %}">menu</a>
+            <a class="active" id="menu-link" href="#">menu</a>
             <a href="{% url 'myapp:about' %}">about</a>
             <a href="{% url 'myapp:contact' %}">Contact</a>
         </div>
@@ -190,9 +189,33 @@
                 <!-- <div class="loader-container">
                     <img src="{% static 'myapp/images/loader2.gif' %}" alt="">
                 </div> -->
-                <!-- custom js file link  -->
+                <!-- custom js file link  -->                
+                </body>
+                </html>
                 <script src="{% static 'js/script.js' %}"></script>
                 <script src="{% static 'js/addToCard.js' %}"></script>
                 <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
-                </body>
-                </html>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+            function getCookie(name) {
+                let cookieArr = document.cookie.split(";");
+                for(let i = 0; i < cookieArr.length; i++) {
+                    let cookiePair = cookieArr[i].split("=");
+                    if(name == cookiePair[0].trim()) {
+                        return decodeURIComponent(cookiePair[1]);
+                    }
+                }
+                return null;
+            }
+
+            let storeID = getCookie('storeID');
+            if (storeID) {
+                let menuLink = document.getElementById('menu-link');
+                menuLink.href = `/myapp/menu/${storeID}/`;
+
+                let orderNowLink = document.getElementById('order-now-link');
+                orderNowLink.href = `/myapp/menu/${storeID}/`;
+            }
+        });
+                </script>
+

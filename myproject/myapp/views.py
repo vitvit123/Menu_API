@@ -20,6 +20,7 @@ from datetime import datetime, timedelta
 
 
 
+
 def home_page(request):
     context = {}
     if request.user.is_authenticated:
@@ -33,22 +34,29 @@ def product_Admin(request):
     return render(request, 'product_admin.html')
 
 def Menu(request, storeid):
+    # Filter menu items based on storeid
     menu_items = MenuItem.objects.filter(storeid=storeid) if storeid else MenuItem.objects.none()
 
-    context = {
+    # Render response and set cookie if storeid is provided
+    response = render(request, 'Menu.html', {
         'menu_items': menu_items,
         'storeid': storeid
-    }
+    })
 
-    return render(request, 'Menu.html', context)
+    if storeid:
+        response.set_cookie('storeID', str(storeid))
+
+    return response
 def News(request):
     return render(request, 'News.html')
 def main(request):
-    superusers = User.objects.filter(is_superuser=True)
+    superusers = User.objects.filter(is_superuser=True).select_related('customer')
+    
     context = {
         'superusers': superusers
     }
     return render(request, 'MainPage.html', context)
+
 def Dish(request):
     return render(request, 'dish.html')
 def Contact(request):
@@ -94,7 +102,6 @@ def Login(request):
             expiration_time = datetime.utcnow() + timedelta(hours=3)
             response = redirect('myapp:home')
             response.set_cookie('username', user.username, expires=make_aware(expiration_time))
-            response.set_cookie('storeID', str(user.id), expires=make_aware(expiration_time))
             return response
         else:
             return render(request, 'Login.html', {'error': 'Invalid email or password'})
@@ -106,6 +113,8 @@ def logout(request):
     
     # Delete the username cookie
     response.delete_cookie('username')
+    response.delete_cookie('storeID')
+
     
     return response
 
@@ -162,7 +171,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            
+
             # Set cookie to expire in 3 hours
             expiration_time = datetime.utcnow() + timedelta(hours=3)
             response = render(request, 'index.html')

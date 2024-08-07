@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
     <style>
@@ -273,7 +274,7 @@
 
                 </div>
                 {% endif %}
-                </div>
+            </div>
             </div>
 
 
@@ -310,7 +311,6 @@
             <h3>Scan this QR code to access the menu</h3>
             <center>
                 <div id="qrcode" style="margin: 30px 0px;">
-                    <!-- <img id="qrcode-image" src="/media/menu_images/qrcode_119082499_99b2608a465093fa27a473d8322a14d9.png" alt="QR Code"> -->
                 </div>
                 
             </center>
@@ -333,7 +333,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-var url = "http://127.0.0.1:8000/myapp/menu/" + getCookie('storeID') + "/";
+var url = "http://172.16.0.212:8000/myapp/menu/" + getCookie('storeID') + "/";
 var qrcodeContainer = document.getElementById("qrcode");
 
 var qrcode = new QRCode(qrcodeContainer, {

@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,100 +8,194 @@
     <title>Menu Categories</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f9fc;
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+        }
+        .logo {
+            width: 65px; /* Adjust size as needed */
+            height: auto;
+        }
+        .header {
+            padding: 15px 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header h4 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
+
+        .header i {
+            font-size: 1.5rem;
+            color: #6c757d;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            border-radius: 25px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .category-card {
+            flex: 0 0 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px auto;
+        }
+
+        .category-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-content h5 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .category-content p {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: #666;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #007bff;
+        }
+
+        .fa-facebook-f {
+            color: #3b5998; /* Facebook color */
+        }
+
+        .fa-instagram {
+            color: #e4405f; /* Instagram color */
+        }
+
+        .fa-phone-alt {
+            color: #34b7f1; /* Phone color */
+        }
+
+        .fa-map-marker-alt {
+            color: #ff5722; /* Location color */
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .category-buttons .btn {
+            font-size: 0.9rem;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+
+        .btn-outline-light {
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-outline-light:hover {
+            color: #fff;
+            background-color: #007bff;
+        }
+    </style>
 </head>
-<style>
-    body {
-        background-color: #f7f9fc;
-        font-family: 'Arial', sans-serif;
-    }
-
-    .header {
-        padding: 10px;
-        background-color: #fff;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .header h4 {
-        margin: 0;
-    }
-
-    .header i {
-        font-size: 1.5rem;
-        color: #6c757d;
-    }
-
-    .search-bar {
-        position: relative;
-    }
-
-    .search-bar .form-control {
-        padding-left: 40px;
-    }
-
-    .search-bar .search-icon {
-        position: absolute;
-        top: 50%;
-        left: 10px;
-        transform: translateY(-50%);
-        color: #6c757d;
-    }
-
-    .category-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-
-    .category-card {
-        flex: 0 0 48%;
-        display: flex;
-        flex-direction: column;
-        padding: 15px;
-        background-color: #cfcfcf; /* Default background color */
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .category-content {
-        flex: 1;
-    }
-
-    .category-content h5 {
-        margin: 0;
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #fff;
-    }
-
-    .category-content p {
-        margin: 5px 0 0;
-        font-size: 0.9rem;
-        color: #fff;
-    }
-
-    .category-buttons {
-        display: flex;
-        gap: 10px;
-        margin-top: 10px;
-    }
-
-    .category-buttons .btn {
-        font-size: 0.9rem;
-    }
-
-</style>
 <body>
 
 <div class="container mt-4">
-    <div class="header d-flex justify-content-between align-items-center mb-4">
-        <i class="fas fa-heart"></i>
-        <h4>Меню</h4>
-        <i class="fas fa-user"></i>
+    <div class="header">
+        <img src="{% static 'images/food-logo.png' %}" alt="Logo" class="logo">
+        <h4>Explore Your Dream Store</h4>
+        <div class="profile-dropdown">
+            {% if user.is_authenticated %}
+                <div class="profile-circle" id="profile-circle"></div>
+                <div class="dropdown-content">
+                        <a href="" class="fas fa-user">Profile</a>
+                        <a href="{% url 'myapp:logout' %}" id="logout-link" class="fas fa-sign-out-alt"> Logout</a>
+                </div>
+            {% else %}
+            <div class="icons">
+                <a href="{% url 'myapp:login' %}" class="fas fa-sign-in-alt"></a>
+
+            </div>
+            {% endif %}
+        </div>
     </div>
-    <div class="search-bar mb-4">
-        <input type="text" class="form-control" id="search-input" placeholder="Поиск по всему каталогу">
+    <div class="search-bar">
+        <input type="text" class="form-control" id="search-input" placeholder="Search Your Favorite Store">
         <i class="fas fa-search search-icon"></i>
     </div>
     <div id="category-list" class="category-list">
@@ -114,7 +209,11 @@
             {
                 username: '{{ user.username }}',
                 email: '{{ user.email }}',
-                id: '{{ user.id }}'
+                id: '{{ user.id }}',
+                facebook: '{{ user.customer.facebook }}' !== 'None' ? '{{ user.customer.facebook }}' : null,
+                instagram: '{{ user.customer.instagram }}' !== 'None' ? '{{ user.customer.instagram }}' : null,
+                phone_number: '{{ user.customer.phone_number }}' !== 'None' ? '{{ user.customer.phone_number }}' : null,
+                address: '{{ user.customer.address }}' !== 'None' ? '{{ user.customer.address }}' : null
             },
         {% endfor %}
     ];
@@ -123,16 +222,41 @@
     const searchInput = document.getElementById('search-input');
 
     const createUserCard = (user) => {
+        const getColorFromUsername = (username) => {
+            const firstChar = username.charAt(0).toUpperCase();
+            const colors = {
+                A: '#3498db',
+                B: '#e74c3c',
+                C: '#2ecc71',
+                D: '#f1c40f',
+                E: '#9b59b6',
+                F: '#e67e22',
+                G: '#1abc9c',
+                // Add more colors for different letters as needed
+            };
+            return colors[firstChar] || '#95a5a6'; // Default color
+        };
+
+        const bgColor = getColorFromUsername(user.username);
+        const profilePic = `<div class="profile-pic" style="background-color: ${bgColor};">${user.username.charAt(0).toUpperCase()}</div>`;
+
         const card = document.createElement('div');
         card.className = 'category-card';
 
         card.innerHTML = `
+            ${profilePic}
             <div class="category-content">
                 <h5>${user.username}</h5>
                 <p>${user.email}</p>
+                <div class="social-icons">
+                    ${user.facebook ? `<a href="${user.facebook}" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>` : ''}
+                    ${user.instagram ? `<a href="${user.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>` : ''}
+                    ${user.phone_number ? `<a href="tel:${user.phone_number}" target="_blank" title="Phone"><i class="fas fa-phone-alt"></i></a>` : ''}
+                    ${user.address ? `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(user.address)}" target="_blank" title="Location"><i class="fas fa-map-marker-alt"></i></a>` : ''}
+                </div>
                 <div class="category-buttons">
-                    <button store_id=${user.id} class="btn btn-outline-light"><i class="fas fa-heart"></i> Add to Favorite</button>
-                    <button store_id=${user.id} class="btn btn-outline-light"><i class="fas fa-eye"></i> See More</button>                </div>
+                    <button store_id="${user.id}" class="btn btn-outline-light" onclick="redirectToStore(${user.id})"><i class="fas fa-eye"></i> See More</button>
+                </div>
             </div>
         `;
 
@@ -147,18 +271,23 @@
         });
     };
 
+    const redirectToStore = (storeId) => {
+        window.location.href = `/myapp/menu/${storeId}/`;
+    };
+
     searchInput.addEventListener('input', (e) => {
         const searchText = e.target.value.toLowerCase();
         const filteredUsers = superusers.filter((user) => {
             return (
                 user.username.toLowerCase().includes(searchText) ||
-                user.email.toLowerCase().includes(searchText)
+                user.email.toLowerCase().includes(searchText) ||
+                (user.facebook && user.facebook.toLowerCase().includes(searchText)) ||
+                (user.instagram && user.instagram.toLowerCase().includes(searchText))
             );
         });
         displayUsers(filteredUsers);
     });
 
-    // Initial display of all superusers
     displayUsers(superusers);
 </script>
 

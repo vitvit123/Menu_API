@@ -11,11 +11,48 @@
     <link rel="icon" href="{% static 'images/food-logo.png' %}">
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
-
+    <style>
+        .no-items {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        .no-items i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .no-items h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .no-items p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .no-items a {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .no-items a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
@@ -23,26 +60,38 @@
 {% include 'header.html' %}
 
 <section class="menu" id="menu">
-    <h3 class="sub-heading"> our menu </h3>
-    <h1 class="heading"> today's speciality </h1>
+    <h3 class="sub-heading">our menu</h3>
+    <h1 class="heading">today's speciality</h1>
 
     <div class="box-container">
-        <!-- Loop through each MenuItem object -->
-        {% for item in menu_items %}
-        <div class="box">
-            <div class="image">
-                <img src="{{ item.image.url }}" alt="">
+        <!-- Check if menu_items is empty -->
+        {% if menu_items %}
+            <!-- Loop through each MenuItem object -->
+            {% for item in menu_items %}
+            <div class="box">
+                <div class="image">
+                    <img src="{{ item.image.url }}" alt="{{ item.item_name }}">
+                </div>
+                <div class="content">
+                    <h3>{{ item.item_name }}</h3>
+                    <p>{{ item.description }}</p>
+                    <span class="price">${{ item.price }}</span>
+                    <a href="#" productid="{{item.id}}" class="btn addtocart">add to cart</a>
+                </div>
             </div>
-            <div class="content">
-                <h3>{{ item.item_name }}</h3>
-                <p>{{ item.description }}</p>
-                <span class="price">${{ item.price }}</span>
-                <a href="#" productid="{{item.id}}" class="btn addtocart">add to cart</a>
+            {% endfor %}
+        {% else %}
+            <!-- Display message when no items are available -->
+            <div class="no-items" style="color: darkgrey;">
+                <i style="color: darkgrey;" class="fa-solid fa-circle-exclamation"></i>
+                <h2 style="color: darkgrey;">No Items Available</h2>
+                <p style="color: darkgrey;">We're sorry, but there are no menu items available at the moment. Please check back later.</p>
+                <a href="{% url 'myapp:home' %}">Go to Home</a>
             </div>
-        </div>
-        {% endfor %}
+        {% endif %}
     </div>
 </section>
+
 <div class="footer">
     <div class="box-container">
         <div class="box">
@@ -63,7 +112,7 @@
 
         <div class="box">
             <h3>contact info</h3>
-            <a href="#">+855 979 801 569 </a>
+            <a href="#">+855 979 801 569</a>
             <a href="#">johnkimleang29@mail.com</a>
         </div>
 
@@ -74,22 +123,14 @@
                 <i class="fa-brands fa-instagram"></i>
                 <i class="fa-brands fa-linkedin"></i>
                 <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="#">Please support us by other platform</a>
-                </div>
-                </div>
-                <!-- <div class="credit">
-                     <p>Develop by: JK Leang</p>
-                 </div> -->
-                
-                </div>
-</body>
-
-</html>
+            </a>
+            <a href="#">Please support us on other platforms</a>
+        </div>
+    </div>
+</div>
 
 <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
-<!-- Add this in your <head> tag -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="{% static 'js/script.js' %}"></script>
 <script src="{% static 'js/addToCard.js' %}"></script>
 <script>
@@ -97,30 +138,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const addToCartButtons = document.querySelectorAll('.addtocart');
     
     addToCartButtons.forEach(button => {
-    button.addEventListener('click', function(event) {
-        event.preventDefault(); 
-        const productId = this.getAttribute('productid');
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); 
+            const productId = this.getAttribute('productid');
 
-        $.ajax({
+            $.ajax({
                 url: '{% url "myapp:get_item_details" %}',
                 data: { item_id: productId },
                 type: 'GET',
                 success: function(response) {
-                    updateCart(response)
+                    updateCart(response);
                     document.querySelector('#cart-icon').click();
-                    
                 },
                 error: function() {
                     console.log('Error fetching item details.');
                 }
             });
-
+        });
     });
-});
- 
 
-
-function updateCart(item) {
+    function updateCart(item) {
         const cartBox = document.querySelector('.cart-box');
         const foodCardImg = cartBox.querySelector('.foodcard');
         const cartTextSpan = cartBox.querySelector('.cart-text span');
@@ -131,7 +168,7 @@ function updateCart(item) {
         foodCardImg.setAttribute('data-foodid', item.item_id);
         cartTextSpan.textContent = item.item_name;
         cartTextP.textContent = `Price $${item.price}`;
-            const updateTotalPrice = () => {
+        const updateTotalPrice = () => {
             const total = (item.price * qtyInput.value).toFixed(2);
             totalPriceSpan.textContent = `${total}`;
         };
@@ -141,44 +178,40 @@ function updateCart(item) {
         qtyInput.addEventListener('input', updateTotalPrice);
     }
 });
+
 function BuyNow() {
     var obj = {
         foodid: document.querySelector('.foodcard').getAttribute('data-foodid'),
         qty: document.querySelector('.cart-qty').value,
         userid: 1, 
-        totalprice: document.querySelector('.total span:last-child').textContent // Assuming .totalprice is a typo and should be .total
+        totalprice: document.querySelector('.total span:last-child').textContent
     };
 
     $.ajax({
         url: '{% url "myapp:makeorder" %}',
         data: obj,
-        type: 'GET', // Change to 'POST' if appropriate
+        type: 'GET',
         success: function(response) {
             console.log('Order placed successfully:', response);
-        // Use SweetAlert to show a success message
-        Swal.fire({
-            icon: 'success',
-            title: 'Order Placed Successfully!',
-            text: 'Thank you for your order.',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-            // Optional: Redirect or handle further actions after user clicks OK
-            if (result.isConfirmed) {
-                // Example: Redirect to home page
-                window.location.href = '{% url "myapp:home" %}';
-            }
-        });        },
+            Swal.fire({
+                icon: 'success',
+                title: 'Order Placed Successfully!',
+                text: 'Thank you for your order.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '{% url "myapp:home" %}';
+                }
+            });
+        },
         error: function(xhr, status, error) {
             console.error('Error placing order:', error);
-            // Handle error response as needed
         }
     });
 }
-
-
-
-
 </script>
 
+</body>
 
+</html>

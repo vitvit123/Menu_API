@@ -1,12 +1,12 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'adminmenu.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshDaily Restaurant</title>
+{% block title %}Page Title{% endblock %}
+
+{% block content %}
+
+
+{% load static %}
+
 
     <link rel="icon" href="{% static 'images/food-logo.png' %}">
 
@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
     <link rel="stylesheet" href="{% static 'css/notification.css' %}">
 
-</head>
 <style>
     .notification {
     display: flex;
@@ -106,7 +105,6 @@
 </style>
 <body>
 
-    {% include 'header.html' %}
     <section class="notification" id="notificationbox">
         {% for order in orders %}
             <div class="notification-box" id="order-{{ order.id }}">
@@ -125,47 +123,7 @@
         {% endfor %}
     </section>
 
-    <div class="footer">
-        <div class="box-container">
-            <div class="box">
-                <h3>quick links</h3>
-                <a href="{% url 'myapp:home' %}">home</a>
-                <a class="active" id="menu-link" href="#">menu</a>
-                <a href="{% url 'myapp:about' %}">about</a>
-                <a href="{% url 'myapp:contact' %}">Contact</a>
-            </div>
-    
-            <div class="box">
-                <h3>Location</h3>
-                <i class="fa-solid fa-location-dot"></i>
-                <a href="#">3rd Floor, City C4, Olympia
-                    <br> City Phnom Penh, Cambodia, 12312
-                </a>
-            </div>
-    
-            <div class="box">
-                <h3>contact info</h3>
-                <a href="#">+855 979 801 569 </a>
-                <a href="#">johnkimleang29@mail.com</a>
-            </div>
-    
-            <div class="box">
-                <h3>follow us</h3>
-                <a href="https://github.com/Kimleang7">
-                    <i class="fa-brands fa-facebook"></i>
-                    <i class="fa-brands fa-instagram"></i>
-                    <i class="fa-brands fa-linkedin"></i>
-                    <i class="fa-brands fa-github"></i>
-                    </a>
-                    <a href="#">Please support us by other platform</a>
-                    </div>
-                    </div>
-                    <!-- <div class="credit">
-                         <p>Develop by: JK Leang</p>
-                     </div> -->
-                    
-                    </div>
-    <!-- footer section ends -->
+   
 </body>
 </html>
     <!-- custom js file link  -->
@@ -230,3 +188,4 @@
 
     </script>
 
+{% endblock %}

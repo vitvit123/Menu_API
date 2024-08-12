@@ -3,6 +3,177 @@
 {% block title %}Page Title{% endblock %}
 
 {% block content %}
-    <h1>Welcome to the Dashboard</h1>
-    <p>Here is the content that should be included in the main content section.</p>
+
+
+{% load static %}
+            <div class="overview-boxes">
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Total Order</div>
+                        <div class="number">40,876</div>
+                        <div class="indicator">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span class="text">Up from yesterday</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-cart-alt cart'></i>
+                </div>
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Total Sales</div>
+                        <div class="number">38,876</div>
+                        <div class="indicator">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span class="text">Up from yesterday</span>
+                        </div>
+                    </div>
+                    <i class='bx bxs-cart-add cart two'></i>
+                </div>
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Total Profit</div>
+                        <div class="number">$12,876</div>
+                        <div class="indicator">
+                            <i class='bx bx-up-arrow-alt'></i>
+                            <span class="text">Up from yesterday</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-cart cart three'></i>
+                </div>
+                <div class="box">
+                    <div class="right-side">
+                        <div class="box-topic">Total Return</div>
+                        <div class="number">11,086</div>
+                        <div class="indicator">
+                            <i class='bx bx-down-arrow-alt down'></i>
+                            <span class="text">Down from today</span>
+                        </div>
+                    </div>
+                    <i class='bx bxs-cart-download cart four'></i>
+                </div>
+            </div>
+            <div class="contain" style="width: 100%;display: flex;padding: 30px;">
+                <div class="container" style="width: 50%;margin-right: 15px;">
+                    <h1>Food Selling Admin Dashboard</h1>
+                    
+                    <div class="chart-container">
+                      <canvas id="chart"></canvas>
+                    </div>
+                </div>
+                <div style="width: 50%;margin-left: 15px;">
+                    <h2>Order Management</h2>
+                        <div class="chart-container">
+                            <canvas id="orders-chart"></canvas>
+                        </div>
+                </div>
+            </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.22/jspdf.plugin.autotable.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.0.0/docx.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="{% static 'js/script.js' %}"></script>
+        <script src="{% static 'js/addToCard.js' %}"></script>
+        <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
+    <script>
+        
+        let sidebar = document.querySelector(".sidebar");
+        let sidebarBtn = document.querySelector(".sidebarBtn");
+        sidebarBtn.onclick = function () {
+            sidebar.classList.toggle("active");
+            if (sidebar.classList.contains("active")) {
+                sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+            } else {
+                sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+            }
+        }
+        
+    
+    const ctx = document.getElementById('chart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Burgers', 'Pizza', 'Salads', 'Drinks'],
+        datasets: [{
+          label: 'Food Sales',
+          data: [120, 80, 50, 30],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    $(document).ajaxStart(function() {
+            $('#loading').show();
+        }).ajaxStop(function() {
+            $('#loading').hide();
+        });
+    const ordersCtx = document.getElementById('orders-chart').getContext('2d');
+
+
+
+    const ordersData = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      datasets: [{
+        label: 'Food Orders',
+        data: [80, 60, 75, 5, 70, 85, 90, 75, 65, 70, 60, 80],
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    };
+
+
+
+    // Create orders chart
+    new Chart(ordersCtx, {
+      type: 'line',
+      data: ordersData,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: 'Monthly Food Orders'
+          }
+        }
+      }
+    })
+     
+
+    
+    </script>
+
+
+
+
+
+
 {% endblock %}

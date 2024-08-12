@@ -62,6 +62,8 @@ def Dish(request):
 def Contact(request):
     return render(request, 'Contact.html')
 def Admin(request):
+    if not request.COOKIES.get('username'):
+        return redirect('http://127.0.0.1:8000/myapp/login/')
     return render(request, 'admin.html')
 def About(request):
     return render(request, 'about.html')
@@ -102,6 +104,7 @@ def Login(request):
             expiration_time = datetime.utcnow() + timedelta(hours=3)
             response = redirect('myapp:home')
             response.set_cookie('username', user.username, expires=make_aware(expiration_time))
+            response.set_cookie('CustomerID', user.id, expires=make_aware(expiration_time))
             return response
         else:
             return render(request, 'Login.html', {'error': 'Invalid email or password'})
@@ -122,17 +125,14 @@ def logout(request):
 def makeorder(request):
     if request.method == 'GET':
         try:
-            # Assuming these are GET parameters sent from your JavaScript AJAX request
-            customer_id = request.GET.get('userid')  # Assuming userid corresponds to customer id
+            customer_id = request.COOKIES.get('CustomerID')
             menu_item_id = request.GET.get('foodid')
             quantity = int(request.GET.get('qty'))
             total_price = float(request.GET.get('totalprice'))
 
-            # Retrieve Customer and MenuItem instances
             customer = get_object_or_404(Customer, id=customer_id)
             menu_item = get_object_or_404(MenuItem, id=menu_item_id)
 
-            # Create Order instance
             order = Order.objects.create(
                 customer=customer,
                 menu_item=menu_item,

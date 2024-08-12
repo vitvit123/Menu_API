@@ -177,8 +177,9 @@
 
 <div class="container mt-4">
     <div class="header">
-        <img src="{% static 'images/food-logo.png' %}" alt="Logo" class="logo">
-        <h4>Explore Your Dream Store</h4>
+        <a href="{% url 'myapp:home' %}">
+            <img src="{% static 'images/food-logo.png' %}" alt="Logo" class="logo">
+        </a>
         <div class="profile-dropdown">
             {% if user.is_authenticated %}
                 <div class="profile-circle" id="profile-circle"></div>

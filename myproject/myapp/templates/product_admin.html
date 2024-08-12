@@ -1,251 +1,248 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Food Selling Admin Dashboard</title>
-  <style>
-    /* CSS styles go here */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+{% extends 'adminmenu.html' %}
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-    }
+{% block content%}
+<style>
+  /* CSS styles go here */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
-    .container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 30px;
-    }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
 
-    .dashboard-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+  }
 
-    .dashboard-header h1 {
-      font-size: 24px;
-      font-weight: 700;
-      color: #333;
-    }
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
 
-    .dashboard-header button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+  .dashboard-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+  }
 
-    .dashboard-section {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin-bottom: 30px;
-    }
+  .dashboard-header button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
-    .dashboard-section h2 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #333;
-      margin-top: 0;
-    }
+  .dashboard-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+  }
 
-    .chart-container {
-      height: 400px;
-      width: 100%;
-    }
+  .dashboard-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0;
+  }
 
-    #sales-chart, #orders-chart {
-      height: 100%;
-      width: 100%;
-    }
+  .chart-container {
+    height: 400px;
+    width: 100%;
+  }
 
-    .product-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+  #sales-chart, #orders-chart {
+    height: 100%;
+    width: 100%;
+  }
 
-    .product-table th, .product-table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
 
-    .product-table th {
-      background-color: #f2f2f2;
-      font-weight: 600;
-    }
+  .product-table th, .product-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
 
-    .product-table td {
-      color: #555;
-    }
+  .product-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+  }
 
-    .product-table button {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-  </style>
+  .product-table td {
+    color: #555;
+  }
+
+  .product-table button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="dashboard-header">
-      <h1>Food Selling Admin Dashboard</h1>
-      <button id="create-product-btn">Create Product</button>
-    </div>
-<div style="display:flex;">
-  <div style="margin-right: 10px;" class="dashboard-section">
-    <h2>Sales Analytics</h2>
-    <div class="chart-container">
-      <canvas id="sales-chart"></canvas>
-    </div>
+<div class="container">
+  <div class="dashboard-header">
+    <h1>Food Selling Admin Dashboard</h1>
+    <button id="create-product-btn">Create Product</button>
   </div>
-
-  <div style="margin-left: 10px;" class="dashboard-section">
-    <h2>Order Management</h2>
-    <div class="chart-container">
-      <canvas id="orders-chart"></canvas>
-    </div>
+<div style="display:flex;">
+<div style="margin-right: 10px;" class="dashboard-section">
+  <h2>Sales Analytics</h2>
+  <div class="chart-container">
+    <canvas id="sales-chart"></canvas>
   </div>
 </div>
 
-    <div class="dashboard-section">
-      <h2>Product Management</h2>
-      <table class="product-table">
-        <thead>
-          <tr>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Stock</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="product-table-body">
-          <!-- Product rows will be dynamically added here -->
-        </tbody>
-      </table>
-    </div>
+<div style="margin-left: 10px;" class="dashboard-section">
+  <h2>Order Management</h2>
+  <div class="chart-container">
+    <canvas id="orders-chart"></canvas>
   </div>
+</div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script>
-    // JavaScript code goes here
-    const salesCtx = document.getElementById('sales-chart').getContext('2d');
-    const ordersCtx = document.getElementById('orders-chart').getContext('2d');
-    const productTableBody = document.getElementById('product-table-body');
-    const createProductBtn = document.getElementById('create-product-btn');
+  <div class="dashboard-section">
+    <h2>Product Management</h2>
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="product-table-body">
+        <!-- Product rows will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+</div>
 
-    // Sample sales data
-    const salesData = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [{
-        label: 'Food Sales',
-        data: [120, 80, 100, 75, 90, 110, 120, 100, 85, 95, 80, 100],
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-      }]
-    };
-    // Sample orders data
-    const ordersData = {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      datasets: [{
-        label: 'Food Orders',
-        data: [80, 60, 75, 5, 70, 85, 90, 75, 65, 70, 60, 80],
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1
-      }]
-    };
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // JavaScript code goes here
+  const salesCtx = document.getElementById('sales-chart').getContext('2d');
+  const ordersCtx = document.getElementById('orders-chart').getContext('2d');
+  const productTableBody = document.getElementById('product-table-body');
+  const createProductBtn = document.getElementById('create-product-btn');
 
-    // Sample product data
-    const products = [
-      { id: 1, name: 'Burger', category: 'Fast Food', price: 5.99, stock: 50 },
-      { id: 2, name: 'Pizza', category: 'Fast Food', price: 12.99, stock: 30 },
-      { id: 3, name: 'Salad', category: 'Healthy', price: 8.99, stock: 20 },
-      { id: 4, name: 'Soda', category: 'Drinks', price: 2.99, stock: 100 }
-    ];
+  // Sample sales data
+  const salesData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [{
+      label: 'Food Sales',
+      data: [120, 80, 100, 75, 90, 110, 120, 100, 85, 95, 80, 100],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  };
+  // Sample orders data
+  const ordersData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [{
+      label: 'Food Orders',
+      data: [80, 60, 75, 5, 70, 85, 90, 75, 65, 70, 60, 80],
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1
+    }]
+  };
 
-    // Create sales chart
-    new Chart(salesCtx, {
-      type: 'line',
-      data: salesData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Monthly Food Sales'
-          }
+  // Sample product data
+  const products = [
+    { id: 1, name: 'Burger', category: 'Fast Food', price: 5.99, stock: 50 },
+    { id: 2, name: 'Pizza', category: 'Fast Food', price: 12.99, stock: 30 },
+    { id: 3, name: 'Salad', category: 'Healthy', price: 8.99, stock: 20 },
+    { id: 4, name: 'Soda', category: 'Drinks', price: 2.99, stock: 100 }
+  ];
+
+  // Create sales chart
+  new Chart(salesCtx, {
+    type: 'line',
+    data: salesData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Food Sales'
         }
       }
-    });
+    }
+  });
 
-    // Create orders chart
-    new Chart(ordersCtx, {
-      type: 'line',
-      data: ordersData,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        plugins: {
-          title: {
-            display: true,
-            text: 'Monthly Food Orders'
-          }
+  // Create orders chart
+  new Chart(ordersCtx, {
+    type: 'line',
+    data: ordersData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Food Orders'
         }
       }
-    });
+    }
+  });
 
-    // Populate product table
-    products.forEach(product => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${product.name}</td>
-        <td>${product.category}</td>
-        <td>$${product.price.toFixed(2)}</td>
-        <td>${product.stock}</td>
-        <td>
-          <button class="edit-product-btn">Edit</button>
-          <button class="delete-product-btn">Delete</button>
-        </td>
-      `;
-      productTableBody.appendChild(row);
-    });
+  // Populate product table
+  products.forEach(product => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${product.name}</td>
+      <td>${product.category}</td>
+      <td>$${product.price.toFixed(2)}</td>
+      <td>${product.stock}</td>
+      <td>
+        <button class="edit-product-btn">Edit</button>
+        <button class="delete-product-btn">Delete</button>
+      </td>
+    `;
+    productTableBody.appendChild(row);
+  });
 
-    // Create product button click event
-    createProductBtn.addEventListener('click', () => {
-      // Add code to handle product creation here
-      console.log('Create product button clicked');
-    });
-    
-  </script>
-</body>
-</html>
+  // Create product button click event
+  createProductBtn.addEventListener('click', () => {
+    // Add code to handle product creation here
+    console.log('Create product button clicked');
+  });
+  
+</script>
+
+{% endblock %}

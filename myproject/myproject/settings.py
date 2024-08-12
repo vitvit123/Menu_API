@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
 "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "EcommerceShop",
+        "NAME": "ecommerceshop",
         "USER": "root",
         "PASSWORD": "",
         "HOST": "127.0.0.1",

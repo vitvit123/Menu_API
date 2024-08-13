@@ -20,8 +20,10 @@ urlpatterns = [
     re_path(r'^makeorder/$', views.makeorder, name='makeorder'),
     re_path(r'^notification/$', views.notification, name='notification'),
     re_path(r'^mark_order_completed/$', views.mark_order_completed, name='mark_order_completed'),
-    re_path(r'^get_item_details/$', views.get_item_details, name='get_item_details'),
+    re_path(r'^get_item_details/$', views.get_item_details, name='get_item_details'),   
     re_path(r'^get_notification_count/$', views.get_notification_count, name='get_notification_count'),
+    re_path(r'^testfile/$', views.Test, name='test'),
+
 ]
 
 if settings.DEBUG:

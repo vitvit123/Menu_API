@@ -10,6 +10,31 @@
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
 
+    <style>
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            border-radius: 25px;
+            border: 1px solid #ced4da;
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: #6c757d;
+        }
+    </style>    
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
 <body>
 
@@ -76,10 +101,10 @@
         <i class='bx bx-menu sidebarBtn'></i>
         <span class="dashboard">Dashboard</span>
       </div>
-      <div class="search-box">
-        <input type="text" placeholder="Search...">
-        <i class='bx bx-search' ></i>
-      </div>
+    <div class="search-bar">
+        <input type="text" class="form-control" id="search-input" placeholder="Search Your Favorite Store">
+        <i class="fas fa-search search-icon"></i>
+    </div>
       <div class="profile-details">
         <!--<img src="images/profile.jpg" alt="">-->
         <span class="admin_name"></span>

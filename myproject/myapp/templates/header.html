@@ -231,9 +231,7 @@
     background-color: #ddd;
 }
 
-.profile-circle:hover + .dropdown-content {
-    display: block;
-}
+
 
     </style>
 </head>
@@ -505,14 +503,35 @@ function BuyNow() {
                 });
             }
         });
+
+
         document.addEventListener('DOMContentLoaded', function() {
     var profileCircle = document.getElementById('profile-circle');
     var dropdownContent = document.querySelector('.dropdown-content');
     var logoutLink = document.getElementById('logout-link');
 
     // Toggle dropdown menu
-    profileCircle.addEventListener('click', function() {
-        dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+    profileCircle.addEventListener('mouseenter', function() {
+        dropdownContent.style.display = 'block';
+    });
+
+    // Hide dropdown when leaving profileCircle unless hovering over dropdownContent
+    profileCircle.addEventListener('mouseleave', function() {
+        setTimeout(function() {
+            if (!dropdownContent.matches(':hover')) {
+                dropdownContent.style.display = 'none';
+            }
+        }, 100); // Short delay to allow for transition between elements
+    });
+
+    // Keep dropdown visible when hovering over dropdownContent
+    dropdownContent.addEventListener('mouseenter', function() {
+        dropdownContent.style.display = 'block';
+    });
+
+    // Hide dropdown when leaving dropdownContent
+    dropdownContent.addEventListener('mouseleave', function() {
+        dropdownContent.style.display = 'none';
     });
 
     // SweetAlert for logout confirmation
@@ -546,8 +565,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     let cookiePair = cookieArr[i].split("=");
                     if(name == cookiePair[0].trim()) {
                         return decodeURIComponent(cookiePair[1]);
+                        }
                     }
-                }
                 return null;
             }
 

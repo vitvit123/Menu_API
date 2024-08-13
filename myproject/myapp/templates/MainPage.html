@@ -1,7 +1,7 @@
+{% extends 'adminmenu.html' %}
 {% load static %}
+{% block content%}
 
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +10,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background-color: #f7f9fc;
-            font-family: 'Roboto', sans-serif;
-            padding: 20px;
-        }
+
         .logo {
             width: 65px; /* Adjust size as needed */
             height: auto;
@@ -176,29 +172,6 @@
 <body>
 
 <div class="container mt-4">
-    <div class="header">
-        <a href="{% url 'myapp:home' %}">
-            <img src="{% static 'images/food-logo.png' %}" alt="Logo" class="logo">
-        </a>
-        <div class="profile-dropdown">
-            {% if user.is_authenticated %}
-                <div class="profile-circle" id="profile-circle"></div>
-                <div class="dropdown-content">
-                        <a href="" class="fas fa-user">Profile</a>
-                        <a href="{% url 'myapp:logout' %}" id="logout-link" class="fas fa-sign-out-alt"> Logout</a>
-                </div>
-            {% else %}
-            <div class="icons">
-                <a href="{% url 'myapp:login' %}" class="fas fa-sign-in-alt"></a>
-
-            </div>
-            {% endif %}
-        </div>
-    </div>
-    <div class="search-bar">
-        <input type="text" class="form-control" id="search-input" placeholder="Search Your Favorite Store">
-        <i class="fas fa-search search-icon"></i>
-    </div>
     <div id="category-list" class="category-list">
         <!-- User cards will be inserted here dynamically -->
     </div>
@@ -293,4 +266,6 @@
 </script>
 
 </body>
-</html>
+
+
+{% endblock %}

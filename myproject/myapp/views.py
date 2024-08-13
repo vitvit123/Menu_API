@@ -32,6 +32,8 @@ def Login(request):
     return render(request, 'Login.html')
 def product_Admin(request):
     return render(request, 'product_admin.html')
+def Test(request):
+    return render(request, 'test.html')
 
 def Menu(request, storeid):
     # Filter menu items based on storeid

@@ -242,6 +242,64 @@
     // Add code to handle product creation here
     console.log('Create product button clicked');
   });
+
+
+  function editProduct(productId) {
+    const product = products.find(p => p.id === productId);
+    if (product) {
+      // Simulate editing by prompting the user for new details
+      const newName = prompt('Enter new product name:', product.name);
+      const newCategory = prompt('Enter new product category:', product.category);
+      const newPrice = prompt('Enter new product price:', product.price);
+      const newStock = prompt('Enter new product stock:', product.stock);
+  
+      // Update the product with new values
+      product.name = newName || product.name;
+      product.category = newCategory || product.category;
+      product.price = parseFloat(newPrice) || product.price;
+      product.stock = parseInt(newStock) || product.stock;
+  
+      // Re-render the product table
+      renderProductTable();
+    }
+  }
+  
+  // Function to handle deleting a product
+  function deleteProduct(productId) {
+    const productIndex = products.findIndex(p => p.id === productId);
+    if (productIndex !== -1) {
+      // Remove the product from the products array
+      products.splice(productIndex, 1);
+  
+      // Re-render the product table
+      renderProductTable();
+    }
+  }
+  
+  // Function to render the product table
+  function renderProductTable() {
+    // Clear the existing rows
+    productTableBody.innerHTML = '';
+  
+    // Add rows for each product
+    products.forEach(product => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${product.name}</td>
+        <td>${product.category}</td>
+        <td>$${product.price.toFixed(2)}</td>
+        <td>${product.stock}</td>
+        <td>
+          <button class="edit-product-btn" onclick="editProduct(${product.id})">Edit</button>
+          <button class="delete-product-btn" onclick="deleteProduct(${product.id})">Delete</button>
+        </td>
+      `;
+      productTableBody.appendChild(row);
+    });
+  }
+  
+  // Initially render the product table
+  renderProductTable();
   
 </script>
 

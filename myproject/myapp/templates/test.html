@@ -1,191 +1,331 @@
 {% extends 'adminmenu.html' %}
 
-{% block title %}Page Title{% endblock %}
-
-{% block content %}
-
-
-{% load static %}
-
-
-    <link rel="icon" href="{% static 'images/food-logo.png' %}">
-
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-
-    <!-- Custom CSS files -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/Login.css' %}">
-    <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
-    <link rel="stylesheet" href="{% static 'css/notification.css' %}">
-
+{% block content%}
 <style>
-    .notification {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0; 
-}
+  /* CSS styles go here */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
-.notification-box {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    padding: 20px;
-    width: 80%;
-    max-width: 500px;
-    text-align: left;
-    transition: transform 0.3s ease;
-}
-
-.notification-box:hover {   
-    transform: scale(1.05);
-}
-
-.notification-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.notification-header h4 {
+  body {
+    font-family: 'Montserrat', sans-serif;
     margin: 0;
-    color: #007bff;
-    font-size: 1.5em;
-}
+    padding: 0;
+    background-color: #f4f4f4;
+  }
 
-.notification-header i {
-    margin-right: 10px;
-    color: #007bff;
-}
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px;
+  }
 
-.notification-content p {
-    margin: 10px 0;
-    color: #555;
+  .dashboard-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-}
+    margin-bottom: 30px;
+  }
 
-.notification-content p i {
-    margin-right: 10px;
-    color: #007bff;
-}
+  .dashboard-header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+  }
 
-.notification-content p strong {
-    color: #000;
-    margin-right: 5px;
-}
-
-.notification-content .complete-button {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: #fff;
+  .dashboard-header button {
+    background-color: #4CAF50;
+    color: white;
     border: none;
-    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
+  }
 
-.notification-content .complete-button:hover {
-    background-color: #218838;
-}
-.notification{
-    margin-top: 5%;
-    margin-bottom: 0%;
-}
+  .dashboard-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+  }
 
+  .dashboard-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0;
+  }
+
+  .chart-container {
+    height: 400px;
+    width: 100%;
+  }
+
+  #sales-chart, #orders-chart {
+    height: 100%;
+    width: 100%;
+  }
+
+  .product-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .product-table th, .product-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .product-table th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+  }
+
+  .product-table td {
+    color: #555;
+  }
+
+  .product-table button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 </style>
+</head>
 <body>
+<div class="container">
+  <div class="dashboard-header">
+    <h1>Food Selling Admin Dashboard</h1>
+    <button id="create-product-btn">Create Product</button>
+  </div>
+<div style="display:flex;">
+<div style="margin-right: 10px;" class="dashboard-section">
+  <h2>Sales Analytics</h2>
+  <div class="chart-container">
+    <canvas id="sales-chart"></canvas>
+  </div>
+</div>
 
-    <section class="notification" id="notificationbox">
-        {% for order in orders %}
-            <div class="notification-box" id="order-{{ order.id }}">
-                <div class="notification-header">
-                    <h4><i class="fas fa-bell"></i> Order Notification</h4>
-                </div>
-                <div class="notification-content">
-                    <p><i class="fas fa-id-badge"></i> <strong>Order ID:</strong> {{ order.id }}</p>
-                    <p><i class="fas fa-user"></i> <strong>Customer:</strong> {{ order.customer.user.username }}</p>
-                    <p><i class="fas fa-utensils"></i> <strong>Menu Item:</strong> {{ order.menu_item.item_name }}</p>
-                    <p><i class="fas fa-sort-amount-up"></i> <strong>Quantity:</strong> {{ order.quantity }}</p>
-                    <p><i class="fas fa-dollar-sign"></i> <strong>Total Price:</strong> ${{ order.total_price }}</p>
-                    <p><i class="fas fa-calendar-alt"></i> <strong>Order Date:</strong> {{ order.order_date }}</p>
-                <button type="button" class="complete-button" onclick="markOrderCompleted( '{{ order.id }}' )">Mark as Completed</button>                </div>
-            </div>
-        {% endfor %}
-    </section>
+<div style="margin-left: 10px;" class="dashboard-section">
+  <h2>Order Management</h2>
+  <div class="chart-container">
+    <canvas id="orders-chart"></canvas>
+  </div>
+</div>
+</div>
 
-   
-</body>
-</html>
-    <!-- custom js file link  -->
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/addToCard.js' %}"></script>
-    <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
-    <script>
-        function markOrderCompleted(orderId) {
-    // Use SweetAlert for confirmation dialog
-    Swal.fire({
-        title: 'Mark Order as Completed?',
-        text: "Are you sure you want to mark this order as completed?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, mark it!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Proceed with AJAX request
-            $.ajax({
-                url: '{% url "myapp:mark_order_completed" %}',
-                type: "POST",
-                data: {
-                    'order_id': orderId,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}'
-                },
-                success: function(response) {
-                    console.log(response);
-                    if (response.success) {
-                        // Order successfully marked as completed
-                        $('#order-' + orderId).remove();
-                        Swal.fire(
-                            'Completed!',
-                            'The order has been marked as completed.',
-                            'success'
-                        );
-                    } else {
-                        Swal.fire(
-                            'Error!',
-                            'Failed to mark the order as completed.',
-                            'error'
-                        );
-                    }
-                },
-                error: function() {
-                    Swal.fire(
-                        'Error!',
-                        'Failed to mark the order as completed.',
-                        'error'
-                    );
-                }
-            });
-        } else {
-            // Handle cancellation
-            console.log("Marking order canceled.");
+  <div class="dashboard-section">
+    <h2>Product Management</h2>
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="product-table-body">
+        <!-- Product rows will be dynamically added here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // JavaScript code goes here
+  const salesCtx = document.getElementById('sales-chart').getContext('2d');
+  const ordersCtx = document.getElementById('orders-chart').getContext('2d');
+  const productTableBody = document.getElementById('product-table-body');
+  const createProductBtn = document.getElementById('create-product-btn');
+
+  // Sample sales data
+  const salesData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [{
+      label: 'Food Sales',
+      data: [120, 80, 100, 75, 90, 110, 120, 100, 85, 95, 80, 100],
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+      borderWidth: 1
+    }]
+  };
+  // Sample orders data
+  const ordersData = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [{
+      label: 'Food Orders',
+      data: [80, 60, 75, 5, 70, 85, 90, 75, 65, 70, 60, 80],
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+      borderWidth: 1
+    }]
+  };
+
+  // Sample product data
+  const products = [
+    { id: 1, name: 'Burger', category: 'Fast Food', price: 5.99, stock: 50 },
+    { id: 2, name: 'Pizza', category: 'Fast Food', price: 12.99, stock: 30 },
+    { id: 3, name: 'Salad', category: 'Healthy', price: 8.99, stock: 20 },
+    { id: 4, name: 'Soda', category: 'Drinks', price: 2.99, stock: 100 }
+  ];
+
+  // Create sales chart
+  new Chart(salesCtx, {
+    type: 'line',
+    data: salesData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
         }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Food Sales'
+        }
+      }
+    }
+  });
+
+  // Create orders chart
+  new Chart(ordersCtx, {
+    type: 'line',
+    data: ordersData,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Monthly Food Orders'
+        }
+      }
+    }
+  });
+
+  // Populate product table
+  products.forEach(product => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${product.name}</td>
+      <td>${product.category}</td>
+      <td>$${product.price.toFixed(2)}</td>
+      <td>${product.stock}</td>
+      <td>
+        <button class="edit-product-btn">Edit</button>
+        <button class="delete-product-btn">Delete</button>
+      </td>
+    `;
+    productTableBody.appendChild(row);
+  });
+
+  // Create product button click event
+  createProductBtn.addEventListener('click', () => {
+    // Add code to handle product creation here
+    console.log('Create product button clicked');
+  });
+
+
+  function editProduct(productId) {
+    const product = products.find(p => p.id === productId);
+    if (product) {
+        // Create a modal or prompt-like interface with input fields and an Exit button
+        const editModal = document.createElement('div');
+        editModal.innerHTML = `
+            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
+                <div style="background: white; padding: 20px; border-radius: 8px; max-width: 400px; width: 100%;">
+                    <h3>Edit Product</h3>
+                    <label>
+                        Name: <input type="text" id="edit-name" value="${product.name}">
+                    </label><br>
+                    <label>
+                        Category: <input type="text" id="edit-category" value="${product.category}">
+                    </label><br>
+                    <label>
+                        Price: <input type="number" id="edit-price" value="${product.price}">
+                    </label><br>
+                    <label>
+                        Stock: <input type="number" id="edit-stock" value="${product.stock}">
+                    </label><br><br>
+                    <button id="save-btn">Save</button>
+                    <button id="exit-btn">Exit</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(editModal);
+
+        // Event listener for the Save button
+        document.getElementById('save-btn').addEventListener('click', () => {
+            const newName = document.getElementById('edit-name').value;
+            const newCategory = document.getElementById('edit-category').value;
+            const newPrice = parseFloat(document.getElementById('edit-price').value);
+            const newStock = parseInt(document.getElementById('edit-stock').value);
+
+            // Update the product with new values
+            product.name = newName || product.name;
+            product.category = newCategory || product.category;
+            product.price = !isNaN(newPrice) ? newPrice : product.price;
+            product.stock = !isNaN(newStock) ? newStock : product.stock;
+
+            // Re-render the product table
+            renderProductTable();
+
+            // Close the modal
+            document.body.removeChild(editModal);
+        });
+
+        // Event listener for the Exit button
+        document.getElementById('exit-btn').addEventListener('click', () => {
+            // Simply close the modal without saving
+            document.body.removeChild(editModal);
+        });
+    }
+}
+
+function renderProductTable() {
+    // Clear the existing rows
+    productTableBody.innerHTML = '';
+
+    // Add rows for each product
+    products.forEach(product => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${product.name}</td>
+            <td>${product.category}</td>
+            <td>$${product.price.toFixed(2)}</td>
+            <td>${product.stock}</td>
+            <td>
+                <button class="edit-product-btn" onclick="editProduct(${product.id})">Edit</button>
+                <button class="delete-product-btn" onclick="deleteProduct(${product.id})">Delete</button>
+            </td>
+        `;
+        productTableBody.appendChild(row);
     });
 }
 
+// Initially render the product table
+renderProductTable();
 
-    </script>
+  
+  
+</script>
 
 {% endblock %}

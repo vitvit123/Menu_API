@@ -1,190 +1,364 @@
-{% extends 'adminmenu.html' %}
-
-{% block title %}Page Title{% endblock %}
-
-{% block content %}
-
-
 {% load static %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore your dream store and manage your orders efficiently.">
+    <meta name="keywords" content="Food Store, Orders, Categories, Notifications">
+    <meta name="author" content="Your Name">
+    <title>Menu Categories</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --background-color: #f7f9fc;
+            --text-color-dark: #333;
+            --text-color-light: #666;
+            --border-color: #ced4da;
+        }
 
-    <link rel="icon" href="{% static 'images/food-logo.png' %}">
+        body {
+            background-color: var(--background-color);
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+        }
 
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+        .logo {
+            width: 65px;
+            height: auto;
+        }
 
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+        header {
+            padding: 15px 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    <!-- Custom CSS files -->
-    <link rel="stylesheet" href="{% static 'css/Login.css' %}">
-    <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
-    <link rel="stylesheet" href="{% static 'css/notification.css' %}">
+        header h4 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
 
-<style>
-    .notification {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0; 
-}
+        header i {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
 
-.notification-box {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px;
-    padding: 20px;
-    width: 80%;
-    max-width: 500px;
-    text-align: left;
-    transition: transform 0.3s ease;
-}
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
 
-.notification-box:hover {   
-    transform: scale(1.05);
-}
+        .search-bar input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.notification-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
+        .search-bar .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
 
-.notification-header h4 {
-    margin: 0;
-    color: #007bff;
-    font-size: 1.5em;
-}
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
 
-.notification-header i {
-    margin-right: 10px;
-    color: #007bff;
-}
+        .category-card {
+            flex: 0 0 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
 
-.notification-content p {
-    margin: 10px 0;
-    color: #555;
-    display: flex;
-    align-items: center;
-}
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
 
-.notification-content p i {
-    margin-right: 10px;
-    color: #007bff;
-}
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px auto;
+        }
 
-.notification-content p strong {
-    color: #000;
-    margin-right: 5px;
-}
+        .category-content {
+            padding: 20px;
+            text-align: center;
+        }
 
-.notification-content .complete-button {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+        .category-content h5 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-color-dark);
+        }
 
-.notification-content .complete-button:hover {
-    background-color: #218838;
-}
-.notification{
-    margin-top: 5%;
-    margin-bottom: 0%;
-}
+        .category-content p {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--text-color-light);
+        }
 
-</style>
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: var(--text-color-light);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .fa-facebook-f {
+            color: #3b5998;
+        }
+
+        .fa-instagram {
+            color: #e4405f;
+        }
+
+        .fa-phone-alt {
+            color: #34b7f1;
+        }
+
+        .fa-map-marker-alt {
+            color: #ff5722;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .category-buttons .btn {
+            font-size: 0.9rem;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+
+        .btn-outline-light {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-light:hover {
+            color: #fff;
+            background-color: var(--primary-color);
+        }
+
+        .notification {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .notification-box {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .notification-box:hover {
+            transform: scale(1.05);
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .notification-header h4 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.5em;
+        }
+
+        .notification-header i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .notification-content p {
+            margin: 10px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-content p i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .notification-content p strong {
+            color: #000;
+            margin-right: 5px;
+        }
+
+        .complete-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .complete-button:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 768px) {
+            header, .notification-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .profile-pic {
+                margin-top: 0;
+            }
+            .category-card {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
+</head>
 <body>
 
-    <section class="notification" id="notificationbox">
-        {% for order in orders %}
-            <div class="notification-box" id="order-{{ order.id }}">
-                <div class="notification-header">
-                    <h4><i class="fas fa-bell"></i> Order Notification</h4>
-                </div>
-                <div class="notification-content">
-                    <p><i class="fas fa-id-badge"></i> <strong>Order ID:</strong> {{ order.id }}</p>
-                    <p><i class="fas fa-user"></i> <strong>Customer:</strong> {{ order.customer.user.username }}</p>
-                    <p><i class="fas fa-utensils"></i> <strong>Menu Item:</strong> {{ order.menu_item.item_name }}</p>
-                    <p><i class="fas fa-sort-amount-up"></i> <strong>Quantity:</strong> {{ order.quantity }}</p>
-                    <p><i class="fas fa-dollar-sign"></i> <strong>Total Price:</strong> ${{ order.total_price }}</p>
-                    <p><i class="fas fa-calendar-alt"></i> <strong>Order Date:</strong> {{ order.order_date }}</p>
-                <button type="button" class="complete-button" onclick="markOrderCompleted( '{{ order.id }}' )">Mark as Completed</button>                </div>
-            </div>
-        {% endfor %}
-    </section>
+<div class="container mt-4">
+    <header>
+        <img src="{% static 'images/food-logo.png' %}" alt="Food Logo" class="logo">
+        <h4>Your Food Store</h4>
+        <i class="fas fa-user-circle fa-lg"></i>
+    </header>
 
-   
-</body>
-</html>
-    <!-- custom js file link  -->
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/addToCard.js' %}"></script>
-    <script src="{% static 'js/jquery.3.6.3.js' %}"></script>
-    <script>
-        function markOrderCompleted(orderId) {
-    // Use SweetAlert for confirmation dialog
-    Swal.fire({
-        title: 'Mark Order as Completed?',
-        text: "Are you sure you want to mark this order as completed?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, mark it!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Proceed with AJAX request
-            $.ajax({
-                url: '{% url "myapp:mark_order_completed" %}',
-                type: "POST",
-                data: {
-                    'order_id': orderId,
-                    'csrfmiddlewaretoken': '{{ csrf_token }}'
-                },
-                success: function(response) {
-                    console.log(response);
-                    if (response.success) {
-                        // Order successfully marked as completed
-                        $('#order-' + orderId).remove();
-                        Swal.fire(
-                            'Completed!',
-                            'The order has been marked as completed.',
-                            'success'
-                        );
-                    } else {
-                        Swal.fire(
-                            'Error!',
-                            'Failed to mark the order as completed.',
-                            'error'
-                        );
-                    }
-                },
-                error: function() {
-                    Swal.fire(
-                        'Error!',
-                        'Failed to mark the order as completed.',
-                        'error'
-                    );
+    <div class="search-bar">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search Categories" id="searchInput">
+    </div>
+
+    <div class="notification">
+        {% for order in orders %}
+        <div class="notification-box">
+            <div class="notification-header">
+                <i class="fas fa-utensils"></i>
+                <h4>{{ order.menu_item.item_name }}</h4>
+            </div>
+            <div class="notification-content">
+                <p><i class="fas fa-user"></i> <strong>Customer:</strong> {{ order.customer.user.username }}</p>
+                <p><i class="fas fa-clock"></i> <strong>Time:</strong> {{ order.order_time }}</p>
+                <p><i class="fas fa-map-marker-alt"></i> <strong>Delivery Address:</strong> {{ order.delivery_address }}</p>
+                <button class="complete-button" data-order-id="{{ order.id }}">Mark as Completed</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script src="{% static 'js/jquery.3.6.3.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        $('.complete-button').click(function() {
+            var orderId = $(this).data('order-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, complete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{% url "myapp:mark_order_completed" %}',
+                        type: 'POST',
+                        data: {
+                            'order_id': orderId,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        },
+                        success: function(response) {
+                            Swal.fire(
+                                'Completed!',
+                                'The order has been marked as completed.',
+                                'success'
+                            ).then(function() {
+                                location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error:", xhr.responseText);
+                            Swal.fire(
+                                'Error!',
+                                'Failed to mark the order as completed.',
+                                'error'
+                            );
+                        }
+                    });
                 }
             });
-        } else {
-            // Handle cancellation
-            console.log("Marking order canceled.");
-        }
+        });
+
+        // Search functionality (if you implement it)
+        $('#searchInput').on('input', function() {
+            var filter = $(this).val().toLowerCase();
+            $('.notification-box').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(filter) > -1);
+            });
+        });
     });
-}
-
-
-    </script>
-
-{% endblock %}
+</script>
+</body>
+</html>

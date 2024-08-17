@@ -1,331 +1,364 @@
-{% extends 'adminmenu.html' %}
+{% load static %}
 
-{% block content%}
-<style>
-  /* CSS styles go here */
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore your dream store and manage your orders efficiently.">
+    <meta name="keywords" content="Food Store, Orders, Categories, Notifications">
+    <meta name="author" content="Your Name">
+    <title>Menu Categories</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --background-color: #f7f9fc;
+            --text-color-dark: #333;
+            --text-color-light: #666;
+            --border-color: #ced4da;
+        }
 
-  body {
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
+        body {
+            background-color: var(--background-color);
+            font-family: 'Roboto', sans-serif;
+            padding: 20px;
+        }
 
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 30px;
-  }
+        .logo {
+            width: 65px;
+            height: auto;
+        }
 
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-  }
+        header {
+            padding: 15px 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-  .dashboard-header h1 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #333;
-  }
+        header h4 {
+            margin: 0;
+            font-weight: 500;
+            font-size: 1.5rem;
+        }
 
-  .dashboard-header button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+        header i {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
 
-  .dashboard-section {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 30px;
-  }
+        .search-bar {
+            position: relative;
+            margin-bottom: 20px;
+        }
 
-  .dashboard-section h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    margin-top: 0;
-  }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 20px 10px 40px;
+            border-radius: 25px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-  .chart-container {
-    height: 400px;
-    width: 100%;
-  }
+        .search-bar .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
 
-  #sales-chart, #orders-chart {
-    height: 100%;
-    width: 100%;
-  }
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
 
-  .product-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+        .category-card {
+            flex: 0 0 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
 
-  .product-table th, .product-table td {
-    padding: 12px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
 
-  .product-table th {
-    background-color: #f2f2f2;
-    font-weight: 600;
-  }
+        .profile-pic {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px auto;
+        }
 
-  .product-table td {
-    color: #555;
-  }
+        .category-content {
+            padding: 20px;
+            text-align: center;
+        }
 
-  .product-table button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-</style>
+        .category-content h5 {
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-color-dark);
+        }
+
+        .category-content p {
+            margin: 10px 0;
+            font-size: 0.9rem;
+            color: var(--text-color-light);
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            color: var(--text-color-light);
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .fa-facebook-f {
+            color: #3b5998;
+        }
+
+        .fa-instagram {
+            color: #e4405f;
+        }
+
+        .fa-phone-alt {
+            color: #34b7f1;
+        }
+
+        .fa-map-marker-alt {
+            color: #ff5722;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .category-buttons .btn {
+            font-size: 0.9rem;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+
+        .btn-outline-light {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-light:hover {
+            color: #fff;
+            background-color: var(--primary-color);
+        }
+
+        .notification {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .notification-box {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            text-align: left;
+            transition: transform 0.3s ease;
+        }
+
+        .notification-box:hover {
+            transform: scale(1.05);
+        }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .notification-header h4 {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.5em;
+        }
+
+        .notification-header i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .notification-content p {
+            margin: 10px 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+        }
+
+        .notification-content p i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .notification-content p strong {
+            color: #000;
+            margin-right: 5px;
+        }
+
+        .complete-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .complete-button:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 768px) {
+            header, .notification-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .profile-pic {
+                margin-top: 0;
+            }
+            .category-card {
+                flex: 0 0 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-  <div class="dashboard-header">
-    <h1>Food Selling Admin Dashboard</h1>
-    <button id="create-product-btn">Create Product</button>
-  </div>
-<div style="display:flex;">
-<div style="margin-right: 10px;" class="dashboard-section">
-  <h2>Sales Analytics</h2>
-  <div class="chart-container">
-    <canvas id="sales-chart"></canvas>
-  </div>
-</div>
 
-<div style="margin-left: 10px;" class="dashboard-section">
-  <h2>Order Management</h2>
-  <div class="chart-container">
-    <canvas id="orders-chart"></canvas>
-  </div>
-</div>
-</div>
+<div class="container mt-4">
+    <header>
+        <img src="{% static 'images/food-logo.png' %}" alt="Food Logo" class="logo">
+        <h4>Your Food Store</h4>
+        <i class="fas fa-user-circle fa-lg"></i>
+    </header>
 
-  <div class="dashboard-section">
-    <h2>Product Management</h2>
-    <table class="product-table">
-      <thead>
-        <tr>
-          <th>Product Name</th>
-          <th>Category</th>
-          <th>Price</th>
-          <th>Stock</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="product-table-body">
-        <!-- Product rows will be dynamically added here -->
-      </tbody>
-    </table>
-  </div>
-</div>
+    <div class="search-bar">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" placeholder="Search Categories" id="searchInput">
+    </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-  // JavaScript code goes here
-  const salesCtx = document.getElementById('sales-chart').getContext('2d');
-  const ordersCtx = document.getElementById('orders-chart').getContext('2d');
-  const productTableBody = document.getElementById('product-table-body');
-  const createProductBtn = document.getElementById('create-product-btn');
-
-  // Sample sales data
-  const salesData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    datasets: [{
-      label: 'Food Sales',
-      data: [120, 80, 100, 75, 90, 110, 120, 100, 85, 95, 80, 100],
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      borderColor: 'rgba(75, 192, 192, 1)',
-      borderWidth: 1
-    }]
-  };
-  // Sample orders data
-  const ordersData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    datasets: [{
-      label: 'Food Orders',
-      data: [80, 60, 75, 5, 70, 85, 90, 75, 65, 70, 60, 80],
-      backgroundColor: 'rgba(54, 162, 235, 0.2)',
-      borderColor: 'rgba(54, 162, 235, 1)',
-      borderWidth: 1
-    }]
-  };
-
-  // Sample product data
-  const products = [
-    { id: 1, name: 'Burger', category: 'Fast Food', price: 5.99, stock: 50 },
-    { id: 2, name: 'Pizza', category: 'Fast Food', price: 12.99, stock: 30 },
-    { id: 3, name: 'Salad', category: 'Healthy', price: 8.99, stock: 20 },
-    { id: 4, name: 'Soda', category: 'Drinks', price: 2.99, stock: 100 }
-  ];
-
-  // Create sales chart
-  new Chart(salesCtx, {
-    type: 'line',
-    data: salesData,
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Monthly Food Sales'
-        }
-      }
-    }
-  });
-
-  // Create orders chart
-  new Chart(ordersCtx, {
-    type: 'line',
-    data: ordersData,
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'Monthly Food Orders'
-        }
-      }
-    }
-  });
-
-  // Populate product table
-  products.forEach(product => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${product.name}</td>
-      <td>${product.category}</td>
-      <td>$${product.price.toFixed(2)}</td>
-      <td>${product.stock}</td>
-      <td>
-        <button class="edit-product-btn">Edit</button>
-        <button class="delete-product-btn">Delete</button>
-      </td>
-    `;
-    productTableBody.appendChild(row);
-  });
-
-  // Create product button click event
-  createProductBtn.addEventListener('click', () => {
-    // Add code to handle product creation here
-    console.log('Create product button clicked');
-  });
-
-
-  function editProduct(productId) {
-    const product = products.find(p => p.id === productId);
-    if (product) {
-        // Create a modal or prompt-like interface with input fields and an Exit button
-        const editModal = document.createElement('div');
-        editModal.innerHTML = `
-            <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center;">
-                <div style="background: white; padding: 20px; border-radius: 8px; max-width: 400px; width: 100%;">
-                    <h3>Edit Product</h3>
-                    <label>
-                        Name: <input type="text" id="edit-name" value="${product.name}">
-                    </label><br>
-                    <label>
-                        Category: <input type="text" id="edit-category" value="${product.category}">
-                    </label><br>
-                    <label>
-                        Price: <input type="number" id="edit-price" value="${product.price}">
-                    </label><br>
-                    <label>
-                        Stock: <input type="number" id="edit-stock" value="${product.stock}">
-                    </label><br><br>
-                    <button id="save-btn">Save</button>
-                    <button id="exit-btn">Exit</button>
-                </div>
+    <div class="notification">
+        {% for order in orders %}
+        <div class="notification-box">
+            <div class="notification-header">
+                <i class="fas fa-utensils"></i>
+                <h4>{{ order.menu_item.item_name }}</h4>
             </div>
-        `;
-        document.body.appendChild(editModal);
+            <div class="notification-content">
+                <p><i class="fas fa-user"></i> <strong>Customer:</strong> {{ order.customer.user.username }}</p>
+                <p><i class="fas fa-clock"></i> <strong>Time:</strong> {{ order.order_time }}</p>
+                <p><i class="fas fa-map-marker-alt"></i> <strong>Delivery Address:</strong> {{ order.delivery_address }}</p>
+                <button class="complete-button" data-order-id="{{ order.id }}">Mark as Completed</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
-        // Event listener for the Save button
-        document.getElementById('save-btn').addEventListener('click', () => {
-            const newName = document.getElementById('edit-name').value;
-            const newCategory = document.getElementById('edit-category').value;
-            const newPrice = parseFloat(document.getElementById('edit-price').value);
-            const newStock = parseInt(document.getElementById('edit-stock').value);
-
-            // Update the product with new values
-            product.name = newName || product.name;
-            product.category = newCategory || product.category;
-            product.price = !isNaN(newPrice) ? newPrice : product.price;
-            product.stock = !isNaN(newStock) ? newStock : product.stock;
-
-            // Re-render the product table
-            renderProductTable();
-
-            // Close the modal
-            document.body.removeChild(editModal);
+<script src="{% static 'js/jquery.3.6.3.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function() {
+        $('.complete-button').click(function() {
+            var orderId = $(this).data('order-id');
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#28a745',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, complete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '{% url "myapp:mark_order_completed" %}',
+                        type: 'POST',
+                        data: {
+                            'order_id': orderId,
+                            'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        },
+                        success: function(response) {
+                            Swal.fire(
+                                'Completed!',
+                                'The order has been marked as completed.',
+                                'success'
+                            ).then(function() {
+                                location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error:", xhr.responseText);
+                            Swal.fire(
+                                'Error!',
+                                'Failed to mark the order as completed.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
         });
 
-        // Event listener for the Exit button
-        document.getElementById('exit-btn').addEventListener('click', () => {
-            // Simply close the modal without saving
-            document.body.removeChild(editModal);
+        // Search functionality (if you implement it)
+        $('#searchInput').on('input', function() {
+            var filter = $(this).val().toLowerCase();
+            $('.notification-box').filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(filter) > -1);
+            });
         });
-    }
-}
-
-function renderProductTable() {
-    // Clear the existing rows
-    productTableBody.innerHTML = '';
-
-    // Add rows for each product
-    products.forEach(product => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${product.name}</td>
-            <td>${product.category}</td>
-            <td>$${product.price.toFixed(2)}</td>
-            <td>${product.stock}</td>
-            <td>
-                <button class="edit-product-btn" onclick="editProduct(${product.id})">Edit</button>
-                <button class="delete-product-btn" onclick="deleteProduct(${product.id})">Delete</button>
-            </td>
-        `;
-        productTableBody.appendChild(row);
     });
-}
-
-// Initially render the product table
-renderProductTable();
-
-  
-  
 </script>
-
-{% endblock %}
+</body>
+</html>

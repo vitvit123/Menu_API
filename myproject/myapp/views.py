@@ -16,10 +16,10 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.http import HttpResponse
 from django.utils.timezone import make_aware
 from datetime import datetime, timedelta
-
-
-
-
+from django.http import HttpResponseRedirect
+from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
 
 def home_page(request):
     context = {}
@@ -30,6 +30,41 @@ def home_page(request):
     return render(request, 'index.html', context)
 def Login(request):
     return render(request, 'Login.html')
+
+def adminproduct(request):
+    store_id = request.COOKIES.get('CustomerID')
+    
+    if store_id:
+        menu_items_list = MenuItem.objects.filter(storeid=store_id)
+    else:
+        menu_items_list = MenuItem.objects.none()
+
+    paginator = Paginator(menu_items_list, 10)  # Show 10 menu items per page
+    page_number = request.GET.get('page')
+    menu_items = paginator.get_page(page_number)
+
+    return render(request, 'adminproduct.html', {'menu_items': menu_items})
+def success_page(request):
+    return render(request, 'success.html')
+def paydeli(request, id):
+    # Get the specific order or return a 404 if not found
+    order = get_object_or_404(Order, id=id)
+    
+    # Update the paymentmethod field to '1'
+    order.paymentmethod = '1'
+    order.save()    
+    return render(request, 'success.html')
+def payment(request):
+    customer_id = request.COOKIES.get('CustomerID')
+
+    if customer_id:
+        orders = Order.objects.filter(is_completed=False, customer__id=customer_id,paymentmethod__isnull=True)
+    else:
+        orders = Order.objects.none()
+
+    return render(request, 'payment.html', {'orders': orders})
+
+
 def product_Admin(request):
     return render(request, 'product_admin.html')
 
@@ -110,6 +145,8 @@ def Login(request):
             return render(request, 'Login.html', {'error': 'Invalid email or password'})
 
     return render(request, 'Login.html')
+
+
 def logout(request):
     auth_logout(request)  # Log out the user
     response = redirect('myapp:home')
@@ -172,7 +209,6 @@ def register(request):
             user = form.save()
             login(request, user)
 
-            # Set cookie to expire in 3 hours
             expiration_time = datetime.utcnow() + timedelta(hours=3)
             response = render(request, 'index.html')
             response.set_cookie('username', user.username, expires=make_aware(expiration_time))
@@ -184,6 +220,89 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
+def upload_qrbill(request, order_id):
+    if request.method == 'POST':
+        order = get_object_or_404(Order, id=order_id)
+        uploaded_file = request.FILES['photo']
+        
+        fs = FileSystemStorage()
+        filename = fs.save(uploaded_file.name, uploaded_file)
+        file_url = fs.url(filename)
+        
+        order.qrseller = file_url  # Assuming this is the correct field
+        order.save()
+        
+        return render(request, 'success.html')  # Ensure this template exists
+    
+    return HttpResponse('Invalid request', status=400)
+def upload_billPayment(request, order_id):
+    if request.method == 'POST':
+        order = get_object_or_404(Order, id=order_id)
+        uploaded_file = request.FILES.get('image')  # Ensure you use the correct field name
+        
+        if uploaded_file:
+            fs = FileSystemStorage()
+            filename = fs.save(uploaded_file.name, uploaded_file)
+            file_url = fs.url(filename)
+            
+            order.paymentbill = file_url  # Assuming this is the correct field
+            order.save()
+            
+            return render(request, 'success.html')  # Ensure this template exists
+        
+        return HttpResponse('No file uploaded', status=400)
+    
+    return HttpResponse('Invalid request', status=400)
 
+def delete_menu_item(request, id):
+    menu_item = get_object_or_404(MenuItem, id=id)
 
+    menu_item.delete()    
+    store_id = request.COOKIES.get('storeID')
+    
+    if store_id:
+        menu_items_list = MenuItem.objects.filter(storeid=store_id)
+    else:
+        menu_items_list = MenuItem.objects.none()
 
+    paginator = Paginator(menu_items_list, 10)  # Show 10 menu items per page
+    page_number = request.GET.get('page')
+    menu_items = paginator.get_page(page_number)
+
+    return render(request, 'adminproduct.html', {'menu_items': menu_items})
+from django.shortcuts import render, redirect
+from .models import MenuItem
+
+def additem(request):
+    if request.method == 'POST':
+        item_name = request.POST.get('item_name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        image = request.FILES.get('image')  # Get the uploaded image
+
+        # Retrieve storeid from cookies
+        store_id = request.COOKIES.get('CustomerID', 'default_value')
+
+        # Create and save the MenuItem instance
+        new_item = MenuItem(
+            item_name=item_name,
+            description=description,
+            price=price,
+            image=image,  # Use the uploaded image
+            storeid=store_id
+        )
+        new_item.save()
+
+        return redirect('adminproduct')
+
+    return render(request, 'admin_add_item.html')
+
+def adminprofile(request):
+    superusers = User.objects.filter(is_superuser=True).select_related('customer')
+    
+    context = {
+        'superusers': superusers
+    }
+
+    # Pass the user data to the template
+    return render(request, 'adminprofile.html', {'customer': superusers})

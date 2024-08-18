@@ -1,0 +1,231 @@
+{% load static %}
+{% include 'header.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Notifications</title>
+    <link rel="icon" href="{% static 'images/food-logo.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/addToCart.css' %}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .notification-wrapper {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification-card {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .order-header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #0069d9;
+        }
+
+        .order-header h4 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .order-details {
+            display: flex;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .order-details .icon {
+            font-size: 40px;
+            color: #007bff;
+            margin-right: 15px;
+        }
+
+        .order-info {
+            flex: 1;
+        }
+
+        .order-info p {
+            margin: 0 0 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .order-info strong {
+            font-weight: bold;
+        }
+
+        .payment-options {
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+        }
+
+        .payment-button {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pay-delivery {
+            background-color: #ff5722;
+        }
+
+        .pay-delivery:hover {
+            background-color: #e64a19;
+        }
+
+        .pay-aba {
+            background-color: #4caf50;
+        }
+
+        .pay-aba:hover {
+            background-color: #388e3c;
+        }
+
+        .qr-code {
+            display: none;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .qr-code img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-section {
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background-color: #f8f9fa;
+        }
+
+        .upload-section input[type="file"] {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .upload-section button {
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: block;
+            margin: 10px auto;
+        }
+
+        .upload-section button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .order-details {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .order-details .icon {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .payment-button {
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="notification-wrapper">
+    {% for order in orders %}
+    <div class="notification-card">
+        <div class="order-header">
+            <h4>Order #{{ order.id }}</h4>
+        </div>
+
+        <div class="order-details">
+            <div class="icon">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <div class="order-info">
+                <p><strong>Customer:</strong> {{ order.customer.user.username }}</p>
+                <p><strong>Menu Item:</strong> {{ order.menu_item.item_name }}</p>
+                <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+                <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+                <p><strong>Order Date:</strong> {{ order.order_date }}</p>
+            </div>
+        </div>
+
+        <div class="payment-options">
+            <a href="{% url 'myapp:paydeli' order.id %}" class="payment-button pay-delivery">Pay on Delivery</a>
+            <a href="javascript:void(0);" class="payment-button pay-aba" onclick="selectAba({{ order.id }})">Pay with ABA</a>
+        </div>
+
+        <div class="qr-code" id="qrCodeContainer-{{ order.id }}">
+            <p>Scan the QR code below to pay with ABA:</p>
+            <img style="width: 300px;height: 450px;" src="{{ order.qrseller }}" alt="QR Code">
+        </div>
+
+        <!-- Image Upload Section -->
+        <div class="upload-section">
+            <form action="{% url 'myapp:upload_billPayment' order.id %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="image" accept="image/*">  <!-- Ensure the name attribute matches -->
+                <button type="submit">Upload Image</button>
+            </form>
+        </div>
+        
+
+    {% endfor %}
+</div>
+
+<script>
+    function selectAba(orderId) {
+        document.querySelectorAll('.qr-code').forEach(function(qrCode) {
+            qrCode.style.display = 'none';
+        });
+        document.getElementById('qrCodeContainer-' + orderId).style.display = 'block';
+    }
+</script>
+
+</body>
+
+</html>

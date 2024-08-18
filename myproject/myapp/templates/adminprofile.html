@@ -1,0 +1,139 @@
+{% extends 'adminmenu.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+{% load static %}
+<style>
+    /* Container for profile section */
+    .profile-container {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for a clean effect */
+        border-radius: 12px; /* Rounded corners */
+        background-color: #fff;
+        max-width: 900px;
+        width: 100%;
+    }
+
+    /* Flexbox styling for left and right columns */
+    .profile-container .flex-fill {
+        padding: 2rem;
+    }
+
+    /* Full height for content inside right box */
+    .h-100 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    /* Profile name styling */
+    .profile-name {
+        font-size: 1.75rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Styling for form elements */
+    .form-control {
+        border-radius: 8px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 8px;
+    }
+
+    /* Social media input styling */
+    .social-input-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .social-input-group i {
+        margin-right: 10px;
+        font-size: 1.5rem;
+        color: #555;
+    }
+
+    .social-input-group input {
+        flex-grow: 1;
+        border-radius: 8px;
+    }
+
+    /* On smaller screens: stack the sections vertically */
+    @media (max-width: 768px) {
+        .d-flex {
+            flex-direction: column;
+        }
+
+        .profile-container .flex-fill {
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+    }
+
+</style>
+
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="d-flex profile-container shadow-lg">
+        
+        <!-- Left box: Personal Information -->
+        <div class="flex-fill border-end">
+            <div class="text-center mb-4">
+                <h4 class="profile-name">{{ user.username }}</h4>
+                <p class="text-muted">{{ user.email }}</p>
+            </div>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="form-group mb-3">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ user.phone_number }}">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
+                </div>
+               
+            </form>
+        </div>
+
+        <!-- Right box: Social Media Links -->
+        <div class="flex-fill">
+            <div class="h-100">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="social-input-group">
+                        <i class="fab fa-facebook-f"></i>
+                        <input type="text" class="form-control" id="facebook" name="facebook" value="{{ user.facebook }}" placeholder="Facebook URL">
+                    </div>
+                    <div class="social-input-group">
+                        <i class="fab fa-instagram"></i>
+                        <input type="text" class="form-control" id="instagram" name="instagram" value="{{ user.instagram }}" placeholder="Instagram URL">
+                    </div>
+                    <div class="social-input-group">
+                        <i class="fas fa-phone-alt"></i>
+                        <input type="tel" class="form-control" id="phone_number" name="phone_number" value="{{ user.phone_number }}" placeholder="Phone Number">
+                    </div>
+                    <div class="social-input-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}" placeholder="Address">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+
+        
+    </div>
+</div>
+{% endblock %}

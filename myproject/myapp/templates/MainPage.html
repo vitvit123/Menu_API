@@ -183,13 +183,11 @@
             {% if user.is_authenticated %}
                 <div class="profile-circle" id="profile-circle"></div>
                 <div class="dropdown-content">
-                        <a href="" class="fas fa-user">Profile</a>
                         <a href="{% url 'myapp:logout' %}" id="logout-link" class="fas fa-sign-out-alt"> Logout</a>
                 </div>
             {% else %}
             <div class="icons">
                 <a href="{% url 'myapp:login' %}" class="fas fa-sign-in-alt"></a>
-
             </div>
             {% endif %}
         </div>

@@ -70,7 +70,8 @@
             {% for item in menu_items %}
             <div class="box">
                 <div class="image">
-                    <img src="{{ item.image.url }}" alt="{{ item.item_name }}">
+                    <!-- <img src="/media/{{ item.item_name }}" alt="{{ item.item_name }}"> -->
+                     <img src="/media/{{item.image}}" alt="">
                 </div>
                 <div class="content">
                     <h3>{{ item.item_name }}</h3>

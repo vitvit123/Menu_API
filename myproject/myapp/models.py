@@ -33,6 +33,10 @@ class Order(models.Model):
     total_price = models.DecimalField(max_digits=6, decimal_places=2)
     order_date = models.DateTimeField(auto_now_add=True)
     is_completed = models.BooleanField(default=False)
+    paymentmethod = models.CharField(max_length=10, blank=True, null=True)
+    paymentbill = models.CharField(max_length=100, blank=True, null=True)
+    qrseller  = models.CharField(max_length=100, blank=True, null=True)
+
 
     def __str__(self):
         return f"Order {self.id} by {self.customer.user.username}"

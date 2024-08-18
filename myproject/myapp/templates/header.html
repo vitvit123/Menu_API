@@ -240,6 +240,7 @@
 <body>
     <header>
         <div class="header-info">
+            <a href="http://127.0.0.1:8000/myapp/main/"><i class="fa-solid fa-arrow-left" style="font-size: 25px;"></i></a>
             <img src="{% static 'images/food-logo.png' %}" alt="Logo" class="logo">
         </div>
 
@@ -254,10 +255,11 @@
                 <i class="fas fa-bars" id="menu-bars"></i>
     
                 <i class="fas fa-shopping-cart" id="cart-icon"></i>
-    
-                <a href="{% url 'myapp:notification' %}" class="fa-solid fa-bell notification-icon">
-                    <span class="notification-number" id="notification-count"></span>
+
+                <a href="{% url 'myapp:payment' %}" class="fa-solid fa-basket-shopping">
+                    
                 </a>
+
                 <a href="#" class="qr-code-icon fas fa-qrcode">
                 </a>
             </div>
